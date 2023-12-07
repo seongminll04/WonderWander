@@ -10,20 +10,16 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "DTYPE")
-@Table(name = "member")
+@Table(name = "users")
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_idx")
-    Long idx;
+    protected Long id;
 
     @Column(name = "user_id", unique = true)
     protected String userid;
-
-//    @Column(name = "user_password")
-//    protected String password;
 
     @Column(name = "user_nickname", unique = true)
     protected String nickname;
@@ -37,8 +33,8 @@ public class User {
     @Column(name = "user_deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(name = "user_alarms")
-    private Boolean alarms;
+    @Column(name = "user_alarm")
+    private Boolean alarm;
 
 //    @OneToMany(mappedBy = "User")
 //    private List<Inquiry> inquiries = new ArrayList<>();
@@ -47,16 +43,16 @@ public class User {
 //    private List<Friendship> friendships = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "User")
-//    private List<AppMemberStamp> appMemberStamps = new ArrayList<>();
+//    private List<Stamp> stamps = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "User")
 //    private List<Likes> likes = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "User")
-//    private List<MemberMarker> memberMarkers = new ArrayList<>();
+//    private List<MapMarker> mapMarkers = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "User")
-//    private List<MemberMapArea> memberMapAreas = new ArrayList<>();
+//    private List<MapArea> MapAreas = new ArrayList<>();
 
     @Builder
     public User(String userid, String nickname, String imgUrl,
@@ -65,7 +61,7 @@ public class User {
         this.nickname = nickname;
         this.imgUrl = imgUrl;
         this.firebaseToken = firebaseToken;
-        this.alarms = false;
+        this.alarm = false;
     }
 
     /**
@@ -79,7 +75,7 @@ public class User {
      * 유저 알람 설정 on/off
      */
     public void alarmOnOff(Boolean alarmSet) {
-        this.alarms = !alarmSet;
+        this.alarm = !alarmSet;
     }
 
     /**

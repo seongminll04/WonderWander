@@ -53,7 +53,7 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
             jsonObject.put("userIdx", user.getId());
             jsonObject.put("userNickname", user.getNickname());
             jsonObject.put("userImage", user.getImgUrl());
-            jsonObject.put("userAlarm", user.getAlarms());
+            jsonObject.put("userAlarm", user.getAlarm());
 
             // Get the PrintWriter
             PrintWriter out = httpServletResponse.getWriter();

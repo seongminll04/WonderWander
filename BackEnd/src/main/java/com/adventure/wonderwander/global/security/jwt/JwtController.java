@@ -12,7 +12,7 @@ public class JwtController {
     @GetMapping
     @PostMapping
     public ResponseEntity<?> getRetoken() {
-        return org.springframework.http.ResponseEntity.ok().body("");
+        return ResponseEntity.ok().body("");
     }
 
 }
