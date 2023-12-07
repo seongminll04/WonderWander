@@ -3,9 +3,9 @@ build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
 !**/src/test/**/build/
-!**/src/main/resource/application.yml/
-!**/src/main/resource/application.properties/
-!**/src/main/resource/**.json/
+!**/src/main/resource/application.yml
+!**/src/main/resource/application.properties
+!**/src/main/resource/**.json
 
 
 ### STS ###
