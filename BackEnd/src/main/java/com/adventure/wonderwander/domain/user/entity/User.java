@@ -5,6 +5,8 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +26,9 @@ public class User {
     @Column(name = "user_nickname", unique = true)
     protected String nickname;
 
+    @Column(name = "user_intro")
+    private String intro;
+
     @Column(name = "user_img_url")
     protected String imgUrl;
 
@@ -39,8 +44,8 @@ public class User {
 //    @OneToMany(mappedBy = "User")
 //    private List<Inquiry> inquiries = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "User")
-//    private List<Friendship> friendships = new ArrayList<>();
+    @OneToMany(mappedBy = "User")
+    private List<Friendship> friendships = new ArrayList<>();
 //
 //    @OneToMany(mappedBy = "User")
 //    private List<Stamp> stamps = new ArrayList<>();
@@ -55,10 +60,11 @@ public class User {
 //    private List<MapArea> MapAreas = new ArrayList<>();
 
     @Builder
-    public User(String userid, String nickname, String imgUrl,
+    public User(String userid, String nickname, String intro ,String imgUrl,
                      String firebaseToken){
         this.userid = userid;
         this.nickname = nickname;
+        this.intro = intro;
         this.imgUrl = imgUrl;
         this.firebaseToken = firebaseToken;
         this.alarm = false;
@@ -69,6 +75,13 @@ public class User {
      */
     public void updateNickname(String nickname) {
         this.nickname = nickname;
+    }
+
+    /**
+     * 자기소개 문구 변경
+     */
+    public void updateIntro(String intro) {
+        this.intro = intro;
     }
 
     /**

@@ -35,7 +35,7 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
     private UserRepository userRepository;
 
     public LoginAuthenticationFilter(ObjectMapper objectMapper) {
-        super(new AntPathRequestMatcher("/api/member/login", "POST"));
+        super(new AntPathRequestMatcher("/api/login", "POST"));
 
         this.objectMapper = objectMapper;
     }

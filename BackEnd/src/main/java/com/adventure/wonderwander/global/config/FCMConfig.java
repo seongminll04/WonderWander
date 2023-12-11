@@ -14,26 +14,26 @@ import java.io.InputStream;
 @Component
 @Slf4j
 public class FCMConfig {
-
-    @Value("${fcm.certification}")
-    private String credential;
-
-    @PostConstruct
-    public void initialize() {
-        ClassPathResource resource = new ClassPathResource(credential);
-
-        try (InputStream stream = resource.getInputStream()) {
-            FirebaseOptions options = FirebaseOptions.builder()
-                    .setCredentials(GoogleCredentials.fromStream(stream))
-                    .build();
-
-            if (FirebaseApp.getApps().isEmpty()) {
-                FirebaseApp.initializeApp(options);
-                log.info("FirebaseApp initialization complete");
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-            throw new RuntimeException();
-        }
-    }
+//
+//    @Value("${fcm.certification}")
+//    private String credential;
+//
+//    @PostConstruct
+//    public void initialize() {
+//        ClassPathResource resource = new ClassPathResource(credential);
+//
+//        try (InputStream stream = resource.getInputStream()) {
+//            FirebaseOptions options = FirebaseOptions.builder()
+//                    .setCredentials(GoogleCredentials.fromStream(stream))
+//                    .build();
+//
+//            if (FirebaseApp.getApps().isEmpty()) {
+//                FirebaseApp.initializeApp(options);
+//                log.info("FirebaseApp initialization complete");
+//            }
+//        }catch (Exception e){
+//            e.printStackTrace();
+//            throw new RuntimeException();
+//        }
+//    }
 }

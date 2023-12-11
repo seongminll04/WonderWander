@@ -26,8 +26,7 @@ public class S3ServiceImpl implements S3Service{
     @Value("${cloud.aws.s3.bucket}")
     private String S3Bucket;
 
-    @Autowired
-    AmazonS3Client amazonS3Client;
+    private final AmazonS3Client amazonS3Client;
 
     /**
      * S3 업로드 메서드
@@ -56,45 +55,15 @@ public class S3ServiceImpl implements S3Service{
             throw new RuntimeException("S3에 이미지를 업로드하는데 실패했습니다.", e);
         }
     }
-    /**
-     * auth 파일 이름 생성 메서드
-     */
-    @Override
-    public String generateAuthFileName(MultipartFile multipartFile, String userNickname) {
-        String originalName = multipartFile.getOriginalFilename();
-        String fileExtension = getFileExtension(originalName);
-        return "authfiles/" + userNickname + fileExtension;
-    }
 
     /**
-     * event image 파일 이름 생성 메서드
+     * 유저 프로필 이미지 이름 생성 메서드
      */
     @Override
-    public String generateEventImageName(MultipartFile multipartFile, String eventTitle) {
+    public String generateImgFileName(MultipartFile multipartFile, String userId) {
         String originalName = multipartFile.getOriginalFilename();
         String fileExtension = getFileExtension(originalName);
-        return "eventImg/" + eventTitle + LocalDateTime.now() + fileExtension;
-    }
-
-    /**
-     * event sub image 파일 이름 생성 메서드
-     */
-    @Override
-    public String generateEventSubImageName(MultipartFile multipartFile, String eventTitle) {
-        String originalName = multipartFile.getOriginalFilename();
-        String fileExtension = getFileExtension(originalName);
-        return "eventSubImg/" + eventTitle + LocalDateTime.now() + fileExtension;
-    }
-
-
-    /**
-     * 프로필 파일 이름 생성 메서드
-     */
-    @Override
-    public String generateImgFileName(MultipartFile multipartFile, String userNickname) {
-        String originalName = multipartFile.getOriginalFilename();
-        String fileExtension = getFileExtension(originalName);
-        return "userImage/" + userNickname + fileExtension;
+        return "userImage/" + userId + fileExtension;
     }
 
     /**
@@ -110,6 +79,9 @@ public class S3ServiceImpl implements S3Service{
         throw new IllegalArgumentException("해당 파일의 확장자를 확인할 수 없습니다.");
     }
 
+    /**
+     * S3 내의 파일 삭제 메서드
+     * */
     @Override
     public void removeFile(String fileName) {
         amazonS3Client.deleteObject(
