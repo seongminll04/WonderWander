@@ -10,8 +10,9 @@ import {
 
   import AsyncStorage from "@react-native-async-storage/async-storage";
   import { useDispatch, useSelector } from "react-redux";
-  import { setModal } from "../../store/actions";
-  import { AppState } from "../../store/state";
+  import { setModal } from "@store/actions";
+  import { AppState } from "@store/state";
+import Login from "@/components/login";
   
   function MainHome() {
     const dispatch = useDispatch();
@@ -19,7 +20,8 @@ import {
   
     return (
       <View style={{ flex: 1 }}>
-        <View style={styles.topbar}>
+        <Login />
+        {/* <View style={styles.topbar}>
           <View style={styles.homecontainer}>
             <Image
               source={require("../../assets/logo.png")}
@@ -48,7 +50,7 @@ import {
           <Text style={styles.barStyle}>😍좋아 할 지 몰라서 다 준비했어😍</Text>
           <Text style={styles.barStyle}>🎸 이런 장르의 음악 좋아하시죠? 🎹</Text>
           <Text style={styles.barStyle}>👩🏻 연령대에 맞춰서 추천해볼게요 👨🏻</Text>
-        </ScrollView>
+        </ScrollView> */}
       </View>
     );
   }

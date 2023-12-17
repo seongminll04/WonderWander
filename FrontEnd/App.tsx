@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import store from "./store/store";
+import store from "@store/store";
 import { Provider } from "react-redux";
 import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -43,9 +43,9 @@ function App(): JSX.Element {
   return (
     <Provider store={store}>
       {/* {Platform.OS==='android' ? <StatusBar backgroundColor={'white'} />:null} */}
-      <NavigationContainer theme={MyTheme}>
-        <View style={styles.container}>
-          <Text>123q</Text>
+      <MainHome />
+      {/* <NavigationContainer theme={MyTheme}>
+        <View style={styles.container}> */}
           {/* <Tab.Navigator tabBar={(props) => <BottomBar {...props} />}>
             <Tab.Screen
               name="home"
@@ -68,8 +68,8 @@ function App(): JSX.Element {
               options={{ tabBarLabel: "보관함", headerShown: false }}
             /> */}
           {/* </Tab.Navigator> */}
-        </View>
-      </NavigationContainer>
+        {/* </View>
+      </NavigationContainer> */}
     </Provider>
   );
 }

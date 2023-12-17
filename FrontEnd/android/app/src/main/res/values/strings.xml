@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WonderWander</string>
+    <string name="kakao_app_key">85eb19a8a2d477b90f6ae0290431bd79</string>
 </resources>
