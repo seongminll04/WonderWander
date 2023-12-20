@@ -26,6 +26,9 @@ public class User {
     @Column(name = "user_nickname", unique = true)
     protected String nickname;
 
+    @Column(name = "user_password")
+    protected String password;
+
     @Column(name = "user_intro")
     private String intro;
 
@@ -60,10 +63,11 @@ public class User {
 //    private List<MapArea> MapAreas = new ArrayList<>();
 
     @Builder
-    public User(String userid, String nickname, String intro ,String imgUrl,
+    public User(String userid, String nickname, String password, String intro ,String imgUrl,
                      String firebaseToken){
         this.userid = userid;
         this.nickname = nickname;
+        this.password = password;
         this.intro = intro;
         this.imgUrl = imgUrl;
         this.firebaseToken = firebaseToken;
@@ -119,4 +123,10 @@ public class User {
         this.firebaseToken=token;
     }
 
+    /**
+     * 비밀번호 암호화
+     */
+    public void passwordEncode(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
 }

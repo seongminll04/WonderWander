@@ -30,6 +30,8 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
     private final FriendshipRepository friendshipRepository;
 
     private final RedisRefreshTokenService redisRefreshTokenService;
@@ -48,8 +50,10 @@ public class UserServiceImpl implements UserService {
         User user = User.builder()
                 .userid(id)
                 .imgUrl(ImgUrl)
+                .password("social")
                 .build();
 
+        user.passwordEncode(passwordEncoder);
         User saveUser = userRepository.save(user);
 
         // 생성한 계정의 Idx 번호 리턴

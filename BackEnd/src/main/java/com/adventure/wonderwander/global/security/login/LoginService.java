@@ -16,6 +16,7 @@ public class LoginService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
+
     /**
      * UserDetails 객체 생성
      */
@@ -27,6 +28,7 @@ public class LoginService implements UserDetailsService {
 
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getUserid())
+                .password(user.getPassword())
                 .build();
     }
 }

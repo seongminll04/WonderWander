@@ -75,6 +75,8 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
             Map<String, Object> kakaoAccount = (Map<String, Object>) data.get("kakao_account");
             String thumbnailImageUrl = (String) ((Map<String, Object>) kakaoAccount.get("profile")).get("thumbnail_image_url");
 
+            System.out.println(num + "@@@123@@@@" + thumbnailImageUrl);
+
             User user = userRepository.findByUserid("kakao@"+num)
                     .orElse(null);
 
@@ -86,10 +88,10 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
                 }
             }
             // 로그인 했으니깐 탈퇴중이라면 탈퇴 취소
-            if (user.getDeletedAt() != null) {
-                user.cancelDeletedDate();
-                userRepository.save(user);
-            }
+//            if (user.getDeletedAt() != null) {
+//                user.cancelDeletedDate();
+//                userRepository.save(user);
+//            }
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("kakao@"+num, "social");
 
             return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
