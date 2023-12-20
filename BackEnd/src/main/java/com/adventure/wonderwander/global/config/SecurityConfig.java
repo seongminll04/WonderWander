@@ -60,13 +60,13 @@ public class SecurityConfig {
             "/favicon.ico",
             "/oauth2/**",
 
-
             /* 웹 회원가입, 로그인 */
             "/api/web/signup",
             "/api/web/login",
 
             "/api/web/idCheck/**",
             /* 앱 회원가입, 로그인 */
+            "/api/login",
             "/api/member/login",
             /* 앱 닉네임 중복확인 */
             "/api/member/nicknameCheck/**",

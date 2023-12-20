@@ -3,7 +3,8 @@ import {
     View,
     Text, Image, TouchableOpacity } from "react-native";
 import React from "react";
-import  * as KakaoLogin from '@react-native-seoul/kakao-login';  
+import * as KakaoLogin from '@react-native-seoul/kakao-login';  
+import axios from "axios";
 
 function Kakao() {
 
@@ -19,7 +20,20 @@ function Kakao() {
 const login = () => {
     KakaoLogin.login().then((result) => {
         console.log("Login Success", JSON.stringify(result));
-        getProfile();
+        const accesstoken =result.accessToken;
+        console.log(accesstoken)
+        axios({
+            method:'post',
+            url:'',
+            data:{
+                social : 'kakao',
+                token : accesstoken
+            }
+        }).then(res=>{
+            console.log(res)
+        }).catch(err => {
+            console.log(err)
+        })
     }).catch((error) => {
         if (error.code === 'E_CANCELLED_OPERATION') {
             console.log("Login Cancel", error.message);
@@ -29,13 +43,6 @@ const login = () => {
     });
 };
   
-const getProfile = () => {
-    KakaoLogin.getProfile().then((result) => {
-        console.log("GetProfile Success", JSON.stringify(result));
-    }).catch((error) => {
-        console.log(`GetProfile Fail(code:${error.code})`, error.message);
-    });
-};
 const styles = StyleSheet.create({
     login_btn:{
         flexDirection: 'row',

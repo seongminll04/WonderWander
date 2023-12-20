@@ -54,7 +54,7 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
         // 보내온 token, social 데이터 가져옴
         String token = loginData.get("token");
         String social = loginData.get("social");
-
+        System.out.println(token + "@@"+ social);
         if (social.equals("kakao")) {
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-type", "application/x-www-form-urlencoded; charset=utf-8");
