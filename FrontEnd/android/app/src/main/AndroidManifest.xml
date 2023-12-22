@@ -9,6 +9,7 @@
       android:icon="@mipmap/ic_launcher"
       android:roundIcon="@mipmap/ic_launcher_round"
       android:allowBackup="true"
+      android:usesCleartextTraffic="true"
       android:theme="@style/AppTheme">
       <activity
         android:name=".MainActivity"
@@ -29,7 +30,7 @@
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:host="oauth" android:scheme="kakao85eb19a8a2d477b90f6ae0290431bd79" />
+          <data android:host="oauth" android:scheme="@string/KAKAO_KEY_WITH_KAKAO" />
         </intent-filter>
       </activity>
     </application>

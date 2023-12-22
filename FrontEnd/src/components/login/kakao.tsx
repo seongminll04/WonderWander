@@ -5,10 +5,47 @@ import {
 import React from "react";
 import * as KakaoLogin from '@react-native-seoul/kakao-login';  
 import axios from "axios";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Config from "react-native-config";
 
-function Kakao() {
+interface Props {
+    setNicknameExists : ()=>void;
+}
 
-     return (
+function Kakao({setNicknameExists}:Props) {
+    const login = () => {
+        KakaoLogin.login().then((result) => {
+            const accesstoken =result.accessToken;
+            axios({
+                method:'post',
+                url: Config.API_APP_KEY + '/login',
+                data:{
+                    'social' : 'kakao',
+                    'token' : accesstoken
+                },
+            }).then(res=>{
+                AsyncStorage.setItem('AccessToken',res.headers["authorization"].toString())
+                AsyncStorage.setItem('RefreshToken',res.headers["authorization-refresh"].toString())
+                AsyncStorage.setItem('userAlarm',res.data["userAlarm"].toString())
+                AsyncStorage.setItem('userImage',res.data["userImage"].toString())
+                if (res.data["userNickname"]) {
+                    AsyncStorage.setItem('userNickname',res.data["userNickname"].toString())
+                } else {
+                    setNicknameExists();
+                }
+            }).catch(err => {
+                console.log(err)
+            })
+        }).catch((error) => {
+            if (error.code === 'E_CANCELLED_OPERATION') {
+                console.log("Login Cancel", error.message);
+            } else {
+                console.log(`Login Fail(code:${error.code})`, error.message);
+            }
+        });
+    };
+
+    return (
       <View style={{ flex: 1, justifyContent:'center',alignItems:'center' }}>
         <TouchableOpacity style={styles.login_btn} onPress={()=>login()}>
             <Image source={require("@assets/sociallogo/kakao.png")} style={styles.login_logo} />
@@ -17,32 +54,7 @@ function Kakao() {
       </View>
     );
 }
-const login = () => {
-    KakaoLogin.login().then((result) => {
-        console.log("Login Success", JSON.stringify(result));
-        const accesstoken =result.accessToken;
-        console.log(accesstoken)
-        axios({
-            method:'post',
-            url:'',
-            data:{
-                social : 'kakao',
-                token : accesstoken
-            }
-        }).then(res=>{
-            console.log(res)
-        }).catch(err => {
-            console.log(err)
-        })
-    }).catch((error) => {
-        if (error.code === 'E_CANCELLED_OPERATION') {
-            console.log("Login Cancel", error.message);
-        } else {
-            console.log(`Login Fail(code:${error.code})`, error.message);
-        }
-    });
-};
-  
+ 
 const styles = StyleSheet.create({
     login_btn:{
         flexDirection: 'row',

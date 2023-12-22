@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -66,10 +67,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public String nicknameUsefulCheck(String nickname) throws Exception {
 
+        // 닉네임 유효성 검사  (영문,숫자 2자 ~ 8자 이내)
+        if (!Pattern.matches("^[a-zA-Z0-9_가-힣\\s]{2,8}$", nickname)) {
+            throw new IllegalStateException("올바르지 않은 닉네임 형식입니다.");
+        }
         if(userRepository.findByNickname(nickname).isPresent())
             throw new Exception("이미 존재하는 닉네임입니다.");
-        else
-            return "사용 가능한 닉네임입니다.";
+
+        return "사용 가능한 닉네임입니다.";
     }
 
     /**
@@ -85,9 +90,7 @@ public class UserServiceImpl implements UserService {
         if (user.getNickname() != null)
             throw new Exception("닉네임이 이미 존재합니다.");
 
-        // 닉네임 중복 체크
-        nicknameUsefulCheck(nickname);
-        // 닉네임 업데이트
+        // 닉네임 등록
         user.updateNickname(nickname);
         // 그리고 저장
         userRepository.save(user);

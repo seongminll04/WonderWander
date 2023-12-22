@@ -1,17 +1,8 @@
 import { AppState } from "./state";
 
 const initialState: AppState = {
-isModalOpen : null,
-isGenreSel : false,
-isLogin:null,
-  album: {
-    id: 1,
-    title: "",
-    singer: "",
-    image: null,
-    url: "",
-    lyrics: "",
-  },
+  isLogin:false,
+  isModalOpen : '로그인',
 };
 
 const reducer = (
@@ -19,14 +10,10 @@ const reducer = (
   action: { type: string; payload: any }
 ) => {
   switch (action.type) {
-    case "SET_MODAL":
-      return { ...state, isModalOpen: action.payload };
-    case "SET_GENRE":
-      return { ...state, isGenreSel: action.payload };
     case "SET_LOGIN":
       return { ...state, isLogin: action.payload };
-    case "SELECT_ALBUM":
-      return { ...state, album: action.payload };
+    case "SET_MODAL":
+      return { ...state, isModalOpen: action.payload };
     default:
       return state;
   }

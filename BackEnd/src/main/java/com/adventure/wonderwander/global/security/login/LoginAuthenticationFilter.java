@@ -124,6 +124,38 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
 
             return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
 
+        } else if (social.equals("naver")) {
+            HttpHeaders headers = new HttpHeaders();
+            headers.add("Authorization", "Bearer "+ token);
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+            ResponseEntity<String> response =
+                    restTemplate.exchange("https://openapi.naver.com/v1/nid/me",
+                            HttpMethod.GET,
+                            new HttpEntity<>(null, headers),
+                            String.class);
+
+            String body = response.getBody();
+
+            Map<String, ?> data = objectMapper.readValue(body, Map.class);
+            Map<String, Object> response_data = (Map<String, Object>) data.get("response");
+            String num = String.valueOf(response_data.get("id"));
+            System.out.println(num);
+            String thumbnailImageUrl = String.valueOf(response_data.get("profile_image"));
+            System.out.println(thumbnailImageUrl);
+            User user = userRepository.findByUserid("naver@"+num)
+                    .orElse(null);
+
+            if (user == null) {
+                try {
+                    userService.login("naver@"+num, thumbnailImageUrl);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("naver@"+num, "social");
+
+            return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
         } else {
             // AbstractAuthenticationProcessingFilter(부모)의 getAuthenticationManager()로 AuthenticationManager 객체를 반환 받은 후
             // authenticate()의 파라미터로 UsernamePasswordAuthenticationToken 객체를 넣고 인증 처리

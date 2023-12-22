@@ -3,9 +3,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const axiosInstance = axios.create();
 
-axiosInstance.interceptors.request.use((request) => {
-  const accessToken = AsyncStorage.getItem('AccessToken');
-
+axiosInstance.interceptors.request.use(async (request) => {
+  const accessToken = await AsyncStorage.getItem('AccessToken');
+  console.log(accessToken)
   if (accessToken) {
     request.headers["Authorization"] = `Bearer ${accessToken}`;
   }
@@ -26,8 +26,8 @@ axiosInstance.interceptors.response.use(
     const originalRequest = config;
 
     if (status === 403) {
-      const accessToken = AsyncStorage.getItem('AccessToken');
-      const refreshToken = AsyncStorage.getItem("RefreshToken");
+      const accessToken = await AsyncStorage.getItem('AccessToken');
+      const refreshToken = await AsyncStorage.getItem("RefreshToken");
 
       try {
         const { data, headers } = await axios({
