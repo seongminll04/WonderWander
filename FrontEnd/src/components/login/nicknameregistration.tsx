@@ -28,7 +28,6 @@ function NicknameRegistration({setNickname}:Props) {
                     nickname:inputValue
                 },
             }).then(res=>{
-                console.log(res);
                 AsyncStorage.setItem('userNickname',inputValue);
                 setInputValue('');
                 setNickname()
@@ -36,7 +35,7 @@ function NicknameRegistration({setNickname}:Props) {
                 console.log(err);
             })
         }).catch(err => {
-            console.log(err.response);
+            Alert.alert(err.response.data);
         })
     }
 

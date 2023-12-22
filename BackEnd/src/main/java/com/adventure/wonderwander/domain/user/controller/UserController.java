@@ -29,7 +29,14 @@ public class UserController {
     @ApiOperation(value = "닉네임 중복 확인")
     @GetMapping("/nicknameCheck/{nickname}")
     public ResponseEntity nicknameUsefulCheck(@PathVariable("nickname") String nickname) throws Exception {
-        return ResponseEntity.ok().body(userService.nicknameUsefulCheck(nickname));
+        String result = userService.nicknameUsefulCheck(nickname);
+
+        if (result.equals("error_1"))
+            return ResponseEntity.badRequest().body("유효하지 않은 닉네임입니다. 다시 시도해주세요.");
+        else if (result.equals("error_2")) {
+            return ResponseEntity.badRequest().body("이미 존재하는 닉네임입니다. 다시 시도해주세요.");
+        } else
+            return ResponseEntity.ok().body(result);
     }
 
     @ApiOperation(value = "닉네임 등록(첫 로그인)")

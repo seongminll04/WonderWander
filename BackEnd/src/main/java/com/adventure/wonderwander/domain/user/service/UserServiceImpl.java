@@ -19,8 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.regex.Pattern;
 
 @Service
@@ -69,13 +68,16 @@ public class UserServiceImpl implements UserService {
 
         // 닉네임 유효성 검사  (영문,숫자 2자 ~ 8자 이내)
         if (!Pattern.matches("^[a-zA-Z0-9_가-힣\\s]{2,8}$", nickname)) {
-            throw new IllegalStateException("올바르지 않은 닉네임 형식입니다.");
+            return "error_1";
         }
+        // 닉네임 중복 체크
         if(userRepository.findByNickname(nickname).isPresent())
-            throw new Exception("이미 존재하는 닉네임입니다.");
+            return "error_2";
 
-        return "사용 가능한 닉네임입니다.";
+        return "success";
     }
+
+
 
     /**
      * 닉네임 등록 (첫 로그인 시)
@@ -86,9 +88,6 @@ public class UserServiceImpl implements UserService {
         // 내 계정정보 불러오기
         User user = userRepository.findByUserid(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
-
-        if (user.getNickname() != null)
-            throw new Exception("닉네임이 이미 존재합니다.");
 
         // 닉네임 등록
         user.updateNickname(nickname);

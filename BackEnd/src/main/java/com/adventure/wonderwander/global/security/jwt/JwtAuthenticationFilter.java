@@ -143,7 +143,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         UserDetails userDetails = org.springframework.security.core.userdetails.User.builder()
                 .username(myUser.getUserid())
-//                .password(myUser.getPassword())
+                .password(myUser.getPassword())
 //                .roles(myUser.getRole().name())
                 .build();
 
