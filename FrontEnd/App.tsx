@@ -14,7 +14,8 @@ function App() {
   const [islogin,setLogin] = useState(false)
   return (
     <Provider store={store}>
-      {!islogin ? <Login setLogin={()=>{setLogin(true)}} />:
+      <ModalOpen />
+      {!islogin ? <Login setLogin={()=>{setLogin(true)}} /> :
       <NavigationContainer>
         <BottomTabs />
       </NavigationContainer>}
