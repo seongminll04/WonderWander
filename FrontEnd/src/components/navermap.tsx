@@ -33,7 +33,7 @@ function NaverMap() {
     style={{flex:0.35, marginBottom:10}}>
         <View style={{flex:0.15, flexDirection:'row', marginLeft:20, marginBottom:5,}}>
             <Text style={{ alignItems:'center',fontFamily:'Roboto-Bold',fontSize:15, marginRight:20,fontWeight:'700',  textAlignVertical:'center'}}>현위치</Text>
-            <Text style={{ alignItems:'center',fontSize:12, color:'#1DAEFF', textAlignVertical:'center'}}>{location ? String(location.latitude)+','+String(location.longitude) : 0}</Text>
+            <Text style={{ alignItems:'center',fontSize:12, color:'#32D583', textAlignVertical:'center'}}>{location ? String(location.latitude)+','+String(location.longitude) : 0}</Text>
         </View>
         <NaverMapView
             style={{ flex:0.85, height: "100%"}}

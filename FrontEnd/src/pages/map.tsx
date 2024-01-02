@@ -4,13 +4,14 @@ import {
     Text,
   } from "react-native";
 import React from "react";
+import NaverMap from "@/components/navermap";
 
 
   
 function Map() {
     return (
       <View style={{ flex: 1 }}>
-        <Text>지도맵</Text>
+        <NaverMap />
       </View>
     );
   }

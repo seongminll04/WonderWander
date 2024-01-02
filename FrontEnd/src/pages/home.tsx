@@ -6,68 +6,48 @@ import {
     TouchableOpacity,
     ScrollView,
     SafeAreaView,
+    TextInput,
+    FlatList,
   } from "react-native";
 import React, { useEffect, useState } from "react";
 
 import { useDispatch, useSelector } from "react-redux";
-import TopBar from "@/components/topbar";
-import NaverMap from "@/components/navermap";
-
+import TopBar from "@/components/home/topbar";
+import Carousel from "@/components/home/carousel";
+import Icon from "react-native-vector-icons/MaterialCommunityIcons";
+import PopularCulturalAssets from "@/components/home/popularculturalassets";
+import RecommendedCulturalAssets from "@/components/home/recommendedculturalassets";
+import CulturalAssetsByEra from "@/components/home/culturalassetsbyera";
   
 function Home() {
   const dispatch = useDispatch();
+
+  const location = ["전체","서울","부산","대구","인천","광주","대전","울산","세종","경기","강원","충북","충남","전북","전남","경북","경남","제주"]
+  const [isLocation , setLocation] = useState("전체")
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopBar />
-      <NaverMap />
-      <View>
-        <Text style={{fontSize:24, fontWeight:'900',marginLeft:20, color:'black'}}>이번 주말 갈 만한 곳</Text>
-        <ScrollView horizontal={true} showsHorizontalScrollIndicator={false} 
-        contentContainerStyle={{flexDirection:'row'}} style={{marginLeft:15, marginTop:10}}>
-          <View style={[styles.region, styles.sel_region]}>
-            <Text style={styles.region_text}>전체</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>서울</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>부산</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>인천</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>광주</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>대전</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>대구</Text>
-          </View>
-          <View style={styles.region}>
-            <Text style={styles.region_text}>울산</Text>
-          </View>
-        </ScrollView>
-      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <View style={{backgroundColor:'#BCBCBC', width:'88%', flexDirection:'row', marginLeft:'6%',alignItems:'center',justifyContent:'center',
+      borderRadius:10, marginBottom:20}}>
+          <Image source={require('@assets/search.png')} style={{width:18,height:18, marginRight:10}} />
+          <TextInput style={{width:'85%'}} placeholder="문화재를 검색해보세요" />
+        </View>
+
+        <Carousel />
+
+        <PopularCulturalAssets />
+        <RecommendedCulturalAssets />
+        <CulturalAssetsByEra />
+
+      </ScrollView>
+
+
     </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
-  region:{
-    width: 50, // 각 아이템의 너비
-    height: 25, // 각 아이템의 높이
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor:'#B9BCBE',
-    borderRadius:20,
-    margin: 5,
-  },
-  sel_region:{
-    backgroundColor:'#1DAEFF'
-  },
-  region_text:{
-    color:'white'
-  }
+
 });
 export default Home;

@@ -2,7 +2,7 @@ import { AppState } from "./state";
 
 const initialState: AppState = {
   isLogin:false,
-  isModalOpen : '로그인',
+  isModalOpen : null,
 };
 
 const reducer = (

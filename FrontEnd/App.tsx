@@ -5,8 +5,8 @@ import { NavigationContainer } from "@react-navigation/native";
 
 import store from "@store/store";
 
-import BottomTabs from '@/components/bottomtabs';
-import ModalOpen from '@/components/modalopen';
+import BottomTabs from '@components/bottomtabs';
+import ModalOpen from '@components/modalopen';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from '@/pages/login';
 

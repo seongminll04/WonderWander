@@ -11,25 +11,27 @@ const Tab = createBottomTabNavigator();
 
 function BottomTabs() {
   return (
-    <Tab.Navigator screenOptions={{tabBarActiveTintColor: '#1DAEFF', headerShown:false, tabBarStyle:{height:60}}}>
+    <Tab.Navigator screenOptions={{tabBarActiveTintColor: '#3B3B3B', headerShown:false, tabBarStyle:{height:80,paddingTop:10}, tabBarLabelStyle:{
+      paddingBottom:20, fontSize:12
+    }}}>
       <Tab.Screen name="Home" component={Home} options={{title:'홈' ,tabBarIcon:({focused})=>{
         return (  
-          <Image source={focused? require('@assets/Home_S.png'):require('@assets/Home.png')} />
+          <Image source={require('@assets/Home.png')} style={{tintColor:focused ? '#3B3B3B':'#B9BCBE'}}  />
         )
       }}} />
       <Tab.Screen name="Map" component={Map} options={{title:'지도',tabBarIcon:({focused})=>{
         return (  
-          <Image source={focused? require('@assets/Location_S.png'):require('@assets/Location.png')} />
+          <Image source={require('@assets/Location.png')} style={{tintColor:focused ? '#3B3B3B':'#B9BCBE'}}   />
         )
       }}} />
       <Tab.Screen name="Ranking" component={Ranking} options={{title:'랭킹',tabBarIcon:({focused})=>{
         return (  
-          <Image source={focused? require('@assets/Ranking_S.png'):require('@assets/Ranking.png')} />
+          <Image source={require('@assets/Ranking.png')} style={{tintColor:focused ? '#3B3B3B':'#B9BCBE'}} />
         )
       }}} />
       <Tab.Screen name="MyPage" component={MyPage} options={{title:'설정',tabBarIcon:({focused})=>{
         return (  
-          <Image source={focused? require('@assets/Setting_S.png'):require('@assets/Setting.png')} />
+          <Image source={require('@assets/Setting.png')} style={{tintColor:focused ? '#3B3B3B':'#B9BCBE'}}  />
         )
       }}} />
     </Tab.Navigator>
