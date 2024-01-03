@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setModal } from "@store/actions";
 import { AppState } from "@store/state";
 import Alarm from "./alarm";
+import Setting from "./setting";
+import Intro from "./Intro";
 
 function ModalOpen() {
     const dispatch = useDispatch();
@@ -15,8 +17,9 @@ function ModalOpen() {
             transparent={true}
             visible={isModalOpen!=null}
             onRequestClose={() => {dispatch(setModal(null));}}>
-                {isModalOpen=='알림' ? <Alarm /> : 
-                isModalOpen=='설정' ? <Alarm />:null}
+                {isModalOpen=='알림' ? <Alarm /> :
+                isModalOpen=='소개' ? <Intro /> : 
+                isModalOpen=='설정' ? <Setting />:null}
         </Modal>
     );
 }

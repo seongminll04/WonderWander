@@ -30,13 +30,13 @@ function NaverMap() {
     return (
 
     <View
-    style={{flex:0.35, marginBottom:10}}>
-        <View style={{flex:0.15, flexDirection:'row', marginLeft:20, marginBottom:5,}}>
+    style={{flex:1}}>
+        <View style={{height:'5%', flexDirection:'row', marginLeft:20, marginBottom:5,}}>
             <Text style={{ alignItems:'center',fontFamily:'Roboto-Bold',fontSize:15, marginRight:20,fontWeight:'700',  textAlignVertical:'center'}}>현위치</Text>
             <Text style={{ alignItems:'center',fontSize:12, color:'#32D583', textAlignVertical:'center'}}>{location ? String(location.latitude)+','+String(location.longitude) : 0}</Text>
         </View>
         <NaverMapView
-            style={{ flex:0.85, height: "100%"}}
+            style={{ height: "95%"}}
             zoomControl={false}
             center={{
             zoom: 12,

@@ -1,6 +1,6 @@
 import {
     StyleSheet,
-    View,
+    SafeAreaView,
     Text,
   } from "react-native";
 import React from "react";
@@ -10,9 +10,9 @@ import NaverMap from "@/components/navermap";
   
 function Map() {
     return (
-      <View style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 }}>
         <NaverMap />
-      </View>
+      </SafeAreaView>
     );
   }
 const styles = StyleSheet.create({

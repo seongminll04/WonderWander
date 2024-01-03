@@ -6,6 +6,8 @@ import Naver from "@components/login/naver";
 import NicknameRegistration from "@components/login/nicknameregistration";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setModal } from "@/store/actions";
 
 interface Props {
   setLogin : ()=>void;
@@ -13,8 +15,17 @@ interface Props {
 
 function Login ({setLogin}:Props) {
   const [nicknameExists, setNicknameExists] = useState(true);
-
+  const dispatch = useDispatch();
   useEffect(() => {
+    const checkFirstLogin = async () => {
+      // AsyncStorage.removeItem('FirstLogin');
+      const FirstLogin = await AsyncStorage.getItem('FirstLogin');
+      if (!FirstLogin) {
+        dispatch(setModal("소개"))
+      }
+    };
+    checkFirstLogin();
+    
     const checkLogin = async () => {
       const accessToken = await AsyncStorage.getItem('AccessToken');
       if (accessToken) {
