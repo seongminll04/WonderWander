@@ -27,7 +27,6 @@ function RecommendedCulturalAssets() {
                         </View>
                     </View>
                 )}/>
-      
         </View>
     );
 }
@@ -44,6 +43,6 @@ const styles = StyleSheet.create({
         borderColor:'#E5E5E5',
         borderWidth:1.5,
         margin: 5,
-      },
+    },
 });
 export default RecommendedCulturalAssets;
