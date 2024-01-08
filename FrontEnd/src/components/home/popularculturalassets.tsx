@@ -11,13 +11,13 @@ function PopularCulturalAssets() {
     const [isLocation , setLocation] = useState("전체")
     return (
         <View style={{marginTop:20}}>
-        <Text style={{fontSize:24, fontWeight:'900',marginLeft:25, color:'black'}}>지역별 인기 문화재</Text>
+        <Text style={{fontSize:24, fontWeight:'900', color:'black'}}>지역별 인기 문화재</Text>
         {/* 지역별 인기 문화재 지역선택 버튼들 */}
         <FlatList 
         horizontal
         showsHorizontalScrollIndicator={false}
         data={location}
-        contentContainerStyle={{paddingHorizontal:20,marginTop:10}}
+        contentContainerStyle={{paddingHorizontal:0,marginTop:10}}
         renderItem={({item})=>(
           <TouchableOpacity onPress={()=>{setLocation(item)}}
           style={[styles.region, isLocation===item ? styles.sel_region : null]}>
@@ -28,7 +28,7 @@ function PopularCulturalAssets() {
         )}/>
    
         <View style={{justifyContent:'center', alignItems:'center'}}>
-        <View style={{flexDirection:'row',width:'85%', marginTop:10, justifyContent:'space-between'}}>
+        <View style={{flexDirection:'row',width:'100%', marginTop:10, justifyContent:'space-between'}}>
           <View style={{backgroundColor:'gray', width:80,height:80, borderRadius:20 }}></View>
           <View style={{marginLeft:20, justifyContent:'center', width:'60%'}}>
             <Text style={{fontWeight:'bold',fontSize:18, color:'#000000', marginBottom:5}}>경주첨성대</Text>
@@ -40,7 +40,7 @@ function PopularCulturalAssets() {
           </View>
           <Icon name="arrow-top-right" size={24} color='#000000' style={{marginRight:10}}/>
         </View>
-        <View style={{flexDirection:'row',width:'85%', marginTop:10, justifyContent:'space-between'}}>
+        <View style={{flexDirection:'row',width:'100%', marginTop:10, justifyContent:'space-between'}}>
           <View style={{backgroundColor:'gray', width:80,height:80, borderRadius:20 }}></View>
           <View style={{marginLeft:20, justifyContent:'center', width:'60%'}}>
             <Text style={{fontWeight:'bold',fontSize:18, color:'#000000', marginBottom:5}}>경주첨성대</Text>
@@ -52,7 +52,7 @@ function PopularCulturalAssets() {
           </View>
           <Icon name="arrow-top-right" size={24} color='#000000' style={{marginRight:10}}/>
         </View>
-        <View style={{flexDirection:'row',width:'85%', marginTop:10, justifyContent:'space-between'}}>
+        <View style={{flexDirection:'row',width:'100%', marginTop:10, justifyContent:'space-between'}}>
           <View style={{backgroundColor:'gray', width:80,height:80, borderRadius:20 }}></View>
           <View style={{marginLeft:20, justifyContent:'center', width:'60%'}}>
             <Text style={{fontWeight:'bold',fontSize:18, color:'#000000', marginBottom:5}}>경주첨성대</Text>

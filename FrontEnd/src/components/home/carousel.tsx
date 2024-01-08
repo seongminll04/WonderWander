@@ -24,7 +24,7 @@ function useInterval(callback: Callback, delay: number | null) {
 }
   
 
-const sss = Dimensions.get("window").width
+const sss = Dimensions.get("window").width * 0.88
 
 function Carousel() {
     const dispatch = useDispatch();
