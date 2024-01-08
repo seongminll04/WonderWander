@@ -9,7 +9,7 @@ function MoveToMap() {
     const navigation = useNavigation();
     return (
         <TouchableOpacity onPress={()=>{navigation.navigate('Map')}}
-        style={{marginTop:20,marginBottom:50, overflow:'hidden', borderRadius:20}}>
+        style={{marginTop:20, overflow:'hidden', borderRadius:20}}>
             <ImageBackground source={require("@assets/gotomap.png")} 
             style={{width:'100%', height:120, justifyContent:'center',alignItems:'center'}}>
                 <Text style={{color:'white',fontSize:20,fontWeight:'bold'}}>탐험을</Text>
