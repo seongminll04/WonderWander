@@ -9,15 +9,16 @@ import {
     TextInput,
     FlatList,
   } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
 import TopBar from "@/components/home/topbar";
 import Carousel from "@/components/home/carousel";
-import Icon from "react-native-vector-icons/MaterialCommunityIcons";
 import PopularCulturalAssets from "@/components/home/popularculturalassets";
 import RecommendedCulturalAssets from "@/components/home/recommendedculturalassets";
 import CulturalAssetsByEra from "@/components/home/culturalassetsbyera";
+import MoveToMap from "@/components/home/movetomap";
   
 function Home() {
   const dispatch = useDispatch();
@@ -28,8 +29,8 @@ function Home() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <TopBar />
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={{backgroundColor:'#BCBCBC', width:'88%', flexDirection:'row', marginLeft:'6%',alignItems:'center',justifyContent:'center',
+      <ScrollView showsVerticalScrollIndicator={false} style={{width:'88%',marginLeft:'6%'}}>
+        <View style={{backgroundColor:'#BCBCBC', width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center',
       borderRadius:10, marginBottom:20}}>
           <Image source={require('@assets/search.png')} style={{width:18,height:18, marginRight:10}} />
           <TextInput style={{width:'85%'}} placeholder="문화재를 검색해보세요" />
@@ -40,6 +41,8 @@ function Home() {
         <PopularCulturalAssets />
         <RecommendedCulturalAssets />
         <CulturalAssetsByEra />
+
+        <MoveToMap />
 
       </ScrollView>
 
