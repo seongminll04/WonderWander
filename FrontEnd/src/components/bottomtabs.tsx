@@ -29,7 +29,7 @@ function BottomTabs() {
           <Image source={require('@assets/Ranking.png')} style={{tintColor:focused ? '#3B3B3B':'#B9BCBE'}} />
         )
       }}} />
-      <Tab.Screen name="MyPage" component={MyPage} options={{title:'설정',tabBarIcon:({focused})=>{
+      <Tab.Screen name="MyPage" component={MyPage} options={{title:'마이페이지',tabBarIcon:({focused})=>{
         return (  
           <Image source={require('@assets/Setting.png')} style={{tintColor:focused ? '#3B3B3B':'#B9BCBE'}}  />
         )
