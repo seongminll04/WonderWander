@@ -6,6 +6,7 @@ import { AppState } from "@store/state";
 import Alarm from "./alarm";
 import Setting from "./setting";
 import Intro from "./Intro";
+import ProfileEdit from "./mypage/profileedit";
 
 function ModalOpen() {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ function ModalOpen() {
             onRequestClose={() => {dispatch(setModal(null));}}>
                 {isModalOpen=='알림' ? <Alarm /> :
                 isModalOpen=='소개' ? <Intro /> : 
+                isModalOpen=='내 정보수정' ? <ProfileEdit /> : 
                 isModalOpen=='설정' ? <Setting />:null}
         </Modal>
     );
