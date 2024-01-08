@@ -19,6 +19,7 @@ import PopularCulturalAssets from "@/components/home/popularculturalassets";
 import RecommendedCulturalAssets from "@/components/home/recommendedculturalassets";
 import CulturalAssetsByEra from "@/components/home/culturalassetsbyera";
 import MoveToMap from "@/components/home/movetomap";
+import Top3User from "@/components/home/top3user";
   
 function Home() {
   const dispatch = useDispatch();
@@ -43,7 +44,7 @@ function Home() {
         <CulturalAssetsByEra />
 
         <MoveToMap />
-
+        <Top3User />
       </ScrollView>
 
 
