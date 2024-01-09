@@ -16,6 +16,7 @@ interface Props {
 function Login ({setLogin}:Props) {
   const [nicknameExists, setNicknameExists] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const checkFirstLogin = async () => {
       // AsyncStorage.removeItem('FirstLogin');

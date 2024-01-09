@@ -27,7 +27,7 @@ function Google({setNicknameExists}:Props) {
             console.log(accesstoken)
             axios({
                 method:'post',
-                url: Config.API_APP_KEY + '/login',
+                url: Config.API_APP_KEY + '/v1/login',
                 data:{
                     'social' : 'google',
                     'token' : accesstoken
@@ -37,7 +37,7 @@ function Google({setNicknameExists}:Props) {
                 AsyncStorage.setItem('RefreshToken',res.headers["authorization-refresh"].toString())
                 AsyncStorage.setItem('userAlarm',res.data["userAlarm"].toString())
                 AsyncStorage.setItem('userImage',res.data["userImage"].toString())
-
+                AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                 if (res.data["userNickname"]) {
                     AsyncStorage.setItem('userNickname',res.data["userNickname"].toString())
                 } else {

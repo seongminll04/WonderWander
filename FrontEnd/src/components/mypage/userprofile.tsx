@@ -4,18 +4,21 @@ import { useDispatch } from "react-redux";
 import { setModal } from "@store/actions";
 import axiosInstance from "@/axiosinstance";
 import Icon from "react-native-vector-icons/SimpleLineIcons";
+import Config from "react-native-config";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function UserProfile() {
     const dispatch = useDispatch();
-    const [isUserData, setUserData] = useState("");
+    const [isUserData, setUserData] = useState({"nickname":'닉네임',"follower":1,"following":2,"intro":"나를 소개해봐"});
 
-    const getUserData = () => {
+    const getUserData = async () => {
+        const userIdx = await AsyncStorage.getItem("userIdx")
         axiosInstance({
             method:'get',
-            url:''
+            url: Config.API_APP_KEY+`/v1/user/getProfile/${userIdx}`,
         }).then((res)=>{
-            console.log(res)
-            setUserData("a")
+            console.log(res.data)
+            setUserData(res.data)
         }).catch((err)=>{
             console.log(err)
         })
@@ -31,15 +34,15 @@ function UserProfile() {
                 <Image source={require("@assets/user1.png")} style={{width:75,height:75, borderRadius:50}} />
             </View>
             <View style={{ width:'60%', alignItems:'flex-start', justifyContent:'space-between'}}>
-                <Text style={{color:'#000000', fontSize:18, fontWeight:'bold'}}>닉네임</Text>
+                <Text style={{color:'#000000', fontSize:18, fontWeight:'bold'}}>{isUserData.nickname}</Text>
                 <View style={{flexDirection:'row',alignItems:'center'}}>
                     <Text>팔로잉 </Text>
-                    <Text style={{fontWeight:'bold'}}> 0 </Text>
+                    <Text style={{fontWeight:'bold'}}> {isUserData.following} </Text>
                     <Text> 팔로워 </Text>
-                    <Text style={{fontWeight:'bold'}}> 0 </Text>
+                    <Text style={{fontWeight:'bold'}}> {isUserData.follower} </Text>
                 </View>
                 <View style={{flexDirection:'row', alignItems:'center'}}>
-                    <Text>나를 소개해보세요 </Text>
+                    <Text>{isUserData.intro} </Text>
                     <Icon name="pencil" size={14} color="#000000" onPress={()=>{dispatch(setModal("내 정보수정"))}} />
                 </View>
             </View>

@@ -18,7 +18,7 @@ function Naver({setNicknameExists}:Props) {
                 const accesstoken =result.successResponse?.accessToken;
                 axios({
                     method:'post',
-                    url: Config.API_APP_KEY+'/login',
+                    url: Config.API_APP_KEY+'/v1/login',
                     data:{
                         social : 'naver',
                         token : accesstoken
@@ -28,6 +28,7 @@ function Naver({setNicknameExists}:Props) {
                     AsyncStorage.setItem('RefreshToken',res.headers["authorization-refresh"].toString())
                     AsyncStorage.setItem('userAlarm',res.data["userAlarm"].toString())
                     AsyncStorage.setItem('userImage',res.data["userImage"].toString())
+                    AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                     if (res.data["userNickname"]) {
                         AsyncStorage.setItem('userNickname',res.data["userNickname"].toString())
                     } else {
