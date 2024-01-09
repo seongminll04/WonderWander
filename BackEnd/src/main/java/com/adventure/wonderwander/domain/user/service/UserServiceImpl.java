@@ -3,6 +3,7 @@ package com.adventure.wonderwander.domain.user.service;
 
 import com.adventure.wonderwander.domain.user.dto.request.ChangeProfileRequestDto;
 import com.adventure.wonderwander.domain.user.dto.response.GetFriendListResponseDto;
+import com.adventure.wonderwander.domain.user.dto.response.GetUserProfileResponseDto;
 import com.adventure.wonderwander.domain.user.entity.Friendship;
 import com.adventure.wonderwander.domain.user.entity.User;
 import com.adventure.wonderwander.domain.user.repository.FriendshipRepository;
@@ -50,6 +51,7 @@ public class UserServiceImpl implements UserService {
         User user = User.builder()
                 .userid(id)
                 .imgUrl(ImgUrl)
+                .intro("")
                 .password("social")
                 .build();
 
@@ -61,41 +63,49 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     * 닉네임 중복 확인
+     * 닉네임 등록 (첫 로그인 시)
      */
+    @Transactional
     @Override
-    public String nicknameUsefulCheck(String nickname) throws Exception {
+    public String registerNickname(String nickname, UserDetails userDetails) throws Exception {
+        // 내 계정정보 불러오기
+        User user = userRepository.findByUserid(userDetails.getUsername())
+                .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
         // 닉네임 유효성 검사  (영문,숫자 2자 ~ 8자 이내)
         if (!Pattern.matches("^[a-zA-Z0-9_가-힣\\s]{2,8}$", nickname)) {
             return "error_1";
         }
         // 닉네임 중복 체크
-        if(userRepository.findByNickname(nickname).isPresent())
+        else if(userRepository.findByNickname(nickname).isPresent())
             return "error_2";
-
-        return "success";
+        else {
+            // 닉네임 등록
+            user.updateNickname(nickname);
+            // 그리고 저장
+            userRepository.save(user);
+            return "닉네임 등록 완료";
+        }
     }
-
-
-
     /**
-     * 닉네임 등록 (첫 로그인 시)
+     * 유저 정보 조회
      */
-    @Transactional
     @Override
-    public String changeNickname(String nickname, UserDetails userDetails) throws Exception {
-        // 내 계정정보 불러오기
+    public GetUserProfileResponseDto getProfile(Long userIdx, UserDetails userDetails) throws Exception {
         User user = userRepository.findByUserid(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
-        // 닉네임 등록
-        user.updateNickname(nickname);
-        // 그리고 저장
-        userRepository.save(user);
-        return "닉네임 등록 완료";
-    }
+        User findUser = userRepository.findById(userIdx)
+                .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
+        return GetUserProfileResponseDto.builder()
+                .nickname(findUser.getNickname())
+                .image(findUser.getImgUrl())
+                .intro(findUser.getIntro())
+                .follower(friendshipRepository.findAllByFriendIdx(userIdx).size())
+                .following(friendshipRepository.findAllByUser(findUser).size())
+                .build();
+    }
     /**
      * 내 정보 수정
      */

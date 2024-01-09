@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/refresh")
+@RequestMapping("/api/v1/refresh")
 @Slf4j
 public class JwtController {
     @GetMapping

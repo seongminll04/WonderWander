@@ -35,7 +35,7 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
     private UserRepository userRepository;
 
     public LoginAuthenticationFilter(ObjectMapper objectMapper) {
-        super(new AntPathRequestMatcher("/api/login", "POST"));
+        super(new AntPathRequestMatcher("/api/v1/login", "POST"));
 
         this.objectMapper = objectMapper;
     }
@@ -66,16 +66,11 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
                             HttpMethod.GET,
                             new HttpEntity<>(null, headers),
                             String.class);
-            System.out.println("정보요청");
             String body = response.getBody();
-            System.out.println("데이터 가져옴");
             Map<String, ?> data = objectMapper.readValue(body, Map.class);
             String num = String.valueOf(data.get("id"));
-            System.out.println(num);
             Map<String, Object> kakaoAccount = (Map<String, Object>) data.get("kakao_account");
             String thumbnailImageUrl = (String) ((Map<String, Object>) kakaoAccount.get("profile")).get("thumbnail_image_url");
-
-            System.out.println(num + "@@@123@@@@" + thumbnailImageUrl);
 
             User user = userRepository.findByUserid("kakao@"+num)
                     .orElse(null);
