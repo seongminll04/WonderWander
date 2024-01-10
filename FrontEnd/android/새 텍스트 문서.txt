@@ -1,0 +1,13 @@
+API_APP_KEY = "http://127.0.0.1:8082/api"
+
+APP_NAME = "WonderWander"
+
+NAVER_KEY = "A0vD7egeFm1ODK4M8t6g"
+NAVER_SECRET = "RhL3rAoVhU"
+
+KAKAO_KEY="85eb19a8a2d477b90f6ae0290431bd79"
+KAKAO_KEY_WITH_KAKAO = "kakao85eb19a8a2d477b90f6ae0290431bd79"
+
+GOOGLE_KEY = "6755519017-51oelhtkoktmd9e2g9aabn6q501h89g6.apps.googleusercontent.com"
+
+NAVER_MAP_CLIENT_ID = "r5uu6rtfk7"
