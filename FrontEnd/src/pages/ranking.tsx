@@ -10,25 +10,32 @@ import {
   FlatList,
 } from 'react-native';
 import React, {useState} from 'react';
+import Top100 from '@/components/ranking/top100';
 
 function Ranking() {
   const [isFriend, setIsFriend] = useState(false);
   const toggleSwitch = () => setIsFriend(!isFriend);
+
   return (
-    <View style={{flex: 1, backgroundColor: 'white'}}>
-      <View style={styles.toggle}>
-        <TouchableOpacity
-          style={!isFriend ? styles.buttonOn : styles.buttonOff}
-          onPress={toggleSwitch}>
-          <Text>전체</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={!isFriend ? styles.buttonOff : styles.buttonOn}
-          onPress={toggleSwitch}>
-          <Text>친구</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+        style={{width: '88%', marginLeft: '6%'}}>
+        <View style={styles.toggle}>
+          <TouchableOpacity
+            style={!isFriend ? styles.buttonOn : styles.buttonOff}
+            onPress={toggleSwitch}>
+            <Text>전체</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={!isFriend ? styles.buttonOff : styles.buttonOn}
+            onPress={toggleSwitch}>
+            <Text>친구</Text>
+          </TouchableOpacity>
+        </View>
+        <Top100></Top100>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({
