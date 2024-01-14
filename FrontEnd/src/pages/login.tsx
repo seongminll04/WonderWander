@@ -30,8 +30,8 @@ function Login ({setLogin}:Props) {
     const checkLogin = async () => {
       const accessToken = await AsyncStorage.getItem('AccessToken');
       if (accessToken) {
-        const username = await AsyncStorage.getItem('userNickname');
-        if (username) {
+        const nickname = await AsyncStorage.getItem('nickname');
+        if (nickname) {
           setLogin();
         } else {
           setNicknameExists(false);

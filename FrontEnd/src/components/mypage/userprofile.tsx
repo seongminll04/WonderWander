@@ -9,19 +9,21 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function UserProfile() {
     const dispatch = useDispatch();
-    const [isUserData, setUserData] = useState({"nickname":'닉네임',"follower":1,"following":2,"intro":"나를 소개해봐"});
+    const [isUserData, setUserData] = useState(
+        {"nickname":'닉네임',
+        "follower":"1",
+        "following":"2",
+        "intro":"나를 소개해봐",
+        "image" : ""});
 
     const getUserData = async () => {
-        const userIdx = await AsyncStorage.getItem("userIdx")
-        axiosInstance({
-            method:'get',
-            url: Config.API_APP_KEY+`/v1/user/getProfile/${userIdx}`,
-        }).then((res)=>{
-            console.log(res.data)
-            setUserData(res.data)
-        }).catch((err)=>{
-            console.log(err)
-        })
+        const nickname = await AsyncStorage.getItem("nickname")
+        const image = await AsyncStorage.getItem("image")
+        const intro = await AsyncStorage.getItem("intro")
+        const follower = await AsyncStorage.getItem("follower")
+        const following = await AsyncStorage.getItem("following")
+        setUserData({"nickname":nickname!, "image" : image!,
+        "follower":follower!,"following":following!,"intro":intro ? intro:"자기소개를 등록해보세요"})
     }
 
     useEffect(() =>{
@@ -31,7 +33,8 @@ function UserProfile() {
     return (
         <View style={{justifyContent:'space-between', marginTop:20, flexDirection:'row', width:'80%',marginBottom:10}} >
             <View style={{width:'40%', justifyContent:'center',alignItems:'center'}}>
-                <Image source={require("@assets/user1.png")} style={{width:75,height:75, borderRadius:50}} />
+                <Image source={isUserData.image? {uri:isUserData.image}
+                    :require("@assets/user1.png")} style={{width:75,height:75, borderRadius:50}} />
             </View>
             <View style={{ width:'60%', alignItems:'flex-start', justifyContent:'space-between'}}>
                 <Text style={{color:'#000000', fontSize:18, fontWeight:'bold'}}>{isUserData.nickname}</Text>

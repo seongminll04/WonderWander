@@ -1,7 +1,7 @@
 import { AppState } from "./state";
 
 const initialState: AppState = {
-  isLogin:false,
+  isLogin:null,
   isModalOpen : null,
 };
 
@@ -12,6 +12,10 @@ const reducer = (
   switch (action.type) {
     case "SET_LOGIN":
       return { ...state, isLogin: action.payload };
+    case "UPDATE_NICKNAME":
+      return { ...state, isLogin: {
+        ...state.isLogin, Nickname:action.payload
+      }}
     case "SET_MODAL":
       return { ...state, isModalOpen: action.payload };
     default:

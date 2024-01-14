@@ -6,7 +6,7 @@ import React, { useState } from "react";
 import axiosInstance from "@/axiosinstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Config from "react-native-config";
-import axios from "axios";
+
 interface Props {
     setNickname : ()=>void;
 }
@@ -21,7 +21,7 @@ function NicknameRegistration({setNickname}:Props) {
                 nickname:inputValue
             },
         }).then(res=>{
-            AsyncStorage.setItem('userNickname',inputValue);
+            AsyncStorage.setItem('nickname',inputValue);
             setInputValue('');
             setNickname();
         }).catch((err)=>{
