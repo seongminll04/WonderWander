@@ -2,25 +2,45 @@ import {
   StyleSheet,
   View,
   Text,
-  Image,
   TouchableOpacity,
   ScrollView,
   SafeAreaView,
-  TextInput,
-  FlatList,
+  Animated,
+  Dimensions,
 } from 'react-native';
 import React, {useState} from 'react';
-import Top100 from '@/components/ranking/top100';
+import TopRank from '@/components/ranking/topRank';
+import FriendRank from '@/components/ranking/friendRank';
 
 function Ranking() {
   const [isFriend, setIsFriend] = useState(false);
-  const toggleSwitch = () => setIsFriend(!isFriend);
+  const [opacity, setOpacity] = useState(new Animated.Value(1)); // 초기값 0으로 설정
+  const toggleSwitch = () => {
+    Animated.timing(opacity, {
+      toValue: 0,
+      duration: 200, // 0.5초 동안 애니메이션 진행
+      useNativeDriver: false,
+    }).start(() => {
+      setIsFriend(!isFriend);
+      fadeIn();
+    });
+  };
+
+  const fadeIn = () => {
+    Animated.timing(opacity, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const WindowHeight = Dimensions.get('window').height;
+  const WindowWidth = Dimensions.get('window').width;
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
-      <ScrollView
-        showsVerticalScrollIndicator={false}
-        style={{width: '88%', marginLeft: '6%'}}>
+      <View
+        style={{width: '88%', marginLeft: '6%', height: WindowHeight - 100}}>
         <View style={styles.toggle}>
           <TouchableOpacity
             style={!isFriend ? styles.buttonOn : styles.buttonOff}
@@ -33,8 +53,10 @@ function Ranking() {
             <Text>친구</Text>
           </TouchableOpacity>
         </View>
-        <Top100></Top100>
-      </ScrollView>
+        <Animated.View style={{opacity}}>
+          {!isFriend ? <TopRank /> : <FriendRank />}
+        </Animated.View>
+      </View>
     </SafeAreaView>
   );
 }
@@ -50,7 +72,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginLeft: '15%',
     marginTop: '10%',
-    borderRadius: 25,
+    borderRadius: 45,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 5,

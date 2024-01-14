@@ -6,16 +6,14 @@ import {
   FlatList,
   TouchableOpacity,
   ScrollView,
+  Dimensions,
 } from 'react-native';
 import React, {useState} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {setModal} from '@store/actions';
-import {AppState} from '@store/state';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import TempData from '@components/ranking/tempData';
-import tempData from '@components/ranking/tempData';
+import {useDispatch} from 'react-redux';
+import {setModal, setUserDetail} from '@store/actions';
+import RankData from '@/components/ranking/rankData';
 
-function top100() {
+function topRank() {
   const dispatch = useDispatch();
   const location = [
     '전체',
@@ -38,6 +36,8 @@ function top100() {
     '제주',
   ];
   const [isLocation, setLocation] = useState('전체');
+  const WindowHeight = Dimensions.get('window').height;
+  const WindowWidth = Dimensions.get('window').width;
 
   return (
     <View style={{marginTop: 20}}>
@@ -79,9 +79,19 @@ function top100() {
         )}
       />
 
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
-        <ScrollView>
-          {TempData.map((data, index) => (
+      <View
+        style={{
+          justifyContent: 'center',
+          alignItems: 'flex-start',
+          height: WindowHeight - 260,
+        }}>
+        <ScrollView
+          showsVerticalScrollIndicator={false}
+          style={{
+            marginBottom: 80,
+            height: WindowHeight - 340,
+          }}>
+          {RankData.map((data, index) => (
             <View
               key={index}
               style={{
@@ -127,16 +137,20 @@ function top100() {
                 </Text>
               </View>
               <TouchableOpacity
+                onPress={() => {
+                  dispatch(setUserDetail(data.username));
+                  dispatch(setModal('사용자 상세정보'));
+                }}
                 style={{
-                  marginRight: '5%',
-                  width: '20%',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  marginRight: '6%',
+                  width: '16%',
                   height: 30,
                   backgroundColor: '#ffffff',
                   borderColor: 'gray',
                   borderWidth: 0.5,
                   borderRadius: 25,
-                  justifyContent: 'center',
-                  alignItems: 'center',
                 }}>
                 <Text style={{color: 'black'}}>자세히</Text>
               </TouchableOpacity>
@@ -171,4 +185,4 @@ const styles = StyleSheet.create({
   },
   buttonDetail: {},
 });
-export default top100;
+export default topRank;
