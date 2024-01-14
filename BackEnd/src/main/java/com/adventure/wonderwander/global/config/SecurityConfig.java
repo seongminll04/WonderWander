@@ -1,5 +1,6 @@
 package com.adventure.wonderwander.global.config;
 
+import com.adventure.wonderwander.domain.user.repository.FriendshipRepository;
 import com.adventure.wonderwander.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -39,6 +40,8 @@ public class SecurityConfig {
     private final RedisRefreshTokenService redisRefreshTokenService;
 
     private final UserRepository userRepository;
+
+    private final FriendshipRepository friendshipRepository;
 
     private final ObjectMapper objectMapper;
 
@@ -125,7 +128,7 @@ public class SecurityConfig {
      * */
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler(jwtService, userRepository, redisRefreshTokenService);
+        return new LoginSuccessHandler(jwtService, userRepository, redisRefreshTokenService,friendshipRepository);
     }
 
     @Bean

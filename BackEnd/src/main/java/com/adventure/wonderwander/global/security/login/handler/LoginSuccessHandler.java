@@ -1,6 +1,7 @@
 package com.adventure.wonderwander.global.security.login.handler;
 
 import com.adventure.wonderwander.domain.user.entity.User;
+import com.adventure.wonderwander.domain.user.repository.FriendshipRepository;
 import com.adventure.wonderwander.domain.user.repository.UserRepository;
 import com.adventure.wonderwander.global.security.jwt.JwtService;
 import com.adventure.wonderwander.global.security.redis.RedisRefreshTokenService;
@@ -28,6 +29,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final RedisRefreshTokenService redisRefreshTokenService;
 
+    private final FriendshipRepository friendshipRepository;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException {
@@ -49,11 +52,17 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
         JSONObject jsonObject = new JSONObject();
+
         jsonObject.put("userIdx", user.getId());
-        jsonObject.put("userNickname", user.getNickname());
-        jsonObject.put("userIntro", user.getIntro());
-        jsonObject.put("userImage", user.getImgUrl());
-        jsonObject.put("userAlarm", user.getAlarm());
+
+        jsonObject.put("image", user.getImgUrl());
+        jsonObject.put("nickname", user.getNickname());
+        jsonObject.put("intro", user.getIntro());
+
+        jsonObject.put("follower", friendshipRepository.findAllByFriendIdx(user.getId()).size());
+        jsonObject.put("following", friendshipRepository.findAllByUser(user).size());
+        
+        jsonObject.put("alarm", user.getAlarm());
 
         // Get the PrintWriter
         PrintWriter out = httpServletResponse.getWriter();

@@ -44,9 +44,10 @@ public class UserController {
 
     @ApiOperation(value = "사용자 정보 불러오기")
     @GetMapping("/getProfile/{userIdx}")
-    public ResponseEntity<?> getProfile(@RequestParam(value = "userIdx") Long userIdx,
+    public ResponseEntity<?> getProfile(@PathVariable Long userIdx,
                                         @AuthenticationPrincipal UserDetails userDetails) throws Exception {
-        return ResponseEntity.ok().body("");
+
+        return ResponseEntity.ok().body(userService.getProfile(userIdx,userDetails));
     }
     
     @ApiOperation(value = "내 정보 수정")
