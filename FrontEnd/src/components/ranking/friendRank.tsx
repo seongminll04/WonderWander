@@ -3,6 +3,7 @@ import {
   Modal,
   Text,
   View,
+  Image,
   FlatList,
   TouchableOpacity,
   ScrollView,
@@ -42,6 +43,14 @@ function friendRank() {
 
   return (
     <View style={{marginTop: 20}}>
+      <TouchableOpacity
+        style={styles.SearchBar}
+        onPress={() => {
+          dispatch(setModal('친구 검색'));
+        }}>
+        <Image source={require('@assets/scope.png')} />
+        <Text>&nbsp;&nbsp;친구를 검색해보세요</Text>
+      </TouchableOpacity>
       <Text
         style={{
           fontSize: 20,
@@ -84,13 +93,13 @@ function friendRank() {
         style={{
           justifyContent: 'center',
           alignItems: 'flex-start',
-          height: WindowHeight - 400,
+          height: WindowHeight - 260,
         }}>
         <ScrollView
           showsVerticalScrollIndicator={false}
           style={{
-            height: WindowHeight - 400,
-            marginBottom: 15,
+            height: WindowHeight - 340,
+            marginBottom: 80,
           }}>
           {FriendData.map((data, index) => (
             <View
@@ -158,31 +167,20 @@ function friendRank() {
             </View>
           ))}
         </ScrollView>
-        <View
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            marginLeft: '4%',
-            height: 60,
-            width: '92%',
-            bottom: -50,
-            backgroundColor: '#2B2B2B',
-            borderColor: 'gray',
-            borderWidth: 0.5,
-            borderRadius: 18,
-            position: 'absolute',
-          }}>
-          <TouchableOpacity>
-            <Text style={{color: 'white', fontSize: 18}}>
-              +&nbsp;&nbsp;친구 추가하기
-            </Text>
-          </TouchableOpacity>
-        </View>
       </View>
     </View>
   );
 }
 const styles = StyleSheet.create({
+  SearchBar: {
+    height: 60,
+    marginBottom: 20,
+    borderRadius: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 25,
+    backgroundColor: '#F8F6FC',
+  },
   region: {
     width: 45, // 각 아이템의 너비
     height: 35, // 각 아이템의 높이

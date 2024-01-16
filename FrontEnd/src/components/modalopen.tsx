@@ -8,6 +8,7 @@ import Setting from './setting';
 import Intro from './Intro';
 import ProfileEdit from './mypage/profileedit';
 import UserDetail from './ranking/userDetail';
+import FrinedSearch from './ranking/friendSearch';
 
 function ModalOpen() {
   const dispatch = useDispatch();
@@ -31,6 +32,8 @@ function ModalOpen() {
         <Setting />
       ) : isModalOpen == '사용자 상세정보' ? (
         <UserDetail />
+      ) : isModalOpen == '친구 검색' ? (
+        <FrinedSearch />
       ) : null}
     </Modal>
   );
