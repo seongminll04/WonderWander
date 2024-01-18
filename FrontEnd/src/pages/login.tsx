@@ -33,9 +33,9 @@ function Login({setLogin}: Props) {
     checkFirstLogin();
 
     const checkLogin = async () => {
-      const accessToken = await AsyncStorage.getItem('AccessToken');
+      const accessToken = "await AsyncStorage.getItem('AccessToken')";
       if (accessToken) {
-        const username = await AsyncStorage.getItem('userNickname');
+        const username = "await AsyncStorage.getItem('userNickname')";
         if (username) {
           setLogin();
         } else {
