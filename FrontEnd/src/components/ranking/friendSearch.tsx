@@ -22,7 +22,7 @@ interface UserData {
   percentage: number;
 }
 
-function friendRank() {
+function FriendSearch() {
   const dispatch = useDispatch();
 
   const [friendAddStates, setFriendAddStates] = useState<boolean[]>(
@@ -262,4 +262,4 @@ const styles = StyleSheet.create({
     elevation: 5,
   },
 });
-export default friendRank;
+export default FriendSearch;
