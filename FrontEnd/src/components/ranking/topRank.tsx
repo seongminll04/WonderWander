@@ -138,7 +138,7 @@ function topRank() {
               </View>
               <TouchableOpacity
                 onPress={() => {
-                  dispatch(setUserDetail(data.username));
+                  dispatch(setUserDetail(data.userId));
                   dispatch(setModal('사용자 상세정보'));
                 }}
                 style={{

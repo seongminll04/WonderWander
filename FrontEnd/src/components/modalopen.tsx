@@ -5,9 +5,9 @@ import {setModal} from '@store/actions';
 import {AppState} from '@store/state';
 import Alarm from './alarm';
 import Intro from './Intro';
-import ProfileEdit from './mypage/profileedit';
 import UserDetail from './ranking/userDetail';
 import Search from './home/search';
+import FrinedSearch from './ranking/friendSearch';
 
 function ModalOpen() {
   const dispatch = useDispatch();
@@ -29,6 +29,8 @@ function ModalOpen() {
         <Search />
       ) : isModalOpen == '사용자 상세정보' ? (
         <UserDetail />
+      ) : isModalOpen == '친구 검색' ? (
+        <FrinedSearch />
       ) : null}
     </Modal>
   );

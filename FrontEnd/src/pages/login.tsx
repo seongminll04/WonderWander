@@ -34,7 +34,7 @@ function Login({setLogin}: Props) {
     checkFirstLogin();
 
     const checkLogin = async () => {
-      const accessToken = await AsyncStorage.getItem('AccessToken');
+      const accessToken = "await AsyncStorage.getItem('AccessToken')";
       if (accessToken) {
         const nickname = await AsyncStorage.getItem('nickname');
         if (nickname) {
@@ -65,8 +65,8 @@ function Login({setLogin}: Props) {
           }}>
           <Text>로그인</Text>
           <Kakao setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
-          <Google setNicknameExists={() => setNicknameExists(false)} />
-          <Naver setNicknameExists={() => setNicknameExists(false)} />
+          <Google setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
+          <Naver setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
         </View>
       ) : (
         <View

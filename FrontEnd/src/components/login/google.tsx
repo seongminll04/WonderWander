@@ -11,9 +11,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
     setNicknameExists : ()=>void;
+    setLogin : () =>void;
 }
 
-function Google({setNicknameExists}:Props) {
+function Google({setNicknameExists,setLogin}:Props) {
     useEffect(() => {
         GoogleSignin.configure({
           webClientId: Config.GOOGLE_KEY,
@@ -43,6 +44,7 @@ function Google({setNicknameExists}:Props) {
                 AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                 if (res.data["nickname"]) {
                     AsyncStorage.setItem('nickname',res.data["nickname"].toString())
+                    setLogin();
                 } else {
                     setNicknameExists();
                 }

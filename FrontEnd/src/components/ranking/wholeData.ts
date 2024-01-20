@@ -1,4 +1,4 @@
-interface UserData {
+interface WholeData {
   userId: string;
   username: string;
   percentage: number;
@@ -6,7 +6,7 @@ interface UserData {
   WanderRate: {[key: string]: number}[];
 }
 
-const rankData: UserData[] = [
+const wholeData: WholeData[] = [
   {
     userId: 'faker',
     username: 'faker.T1',
@@ -62,6 +62,63 @@ const rankData: UserData[] = [
       {광주: 0},
       {강원: 27},
       {제주: 0.21652},
+    ],
+  },
+  {
+    userId: 'zone',
+    username: '地Zone',
+    percentage: 99.1557,
+    isFriend: false,
+    WanderRate: [
+      {전체: 99.1557},
+      {서울: 15},
+      {경기: 10},
+      {인천: 5},
+      {부산: 10},
+      {대전: 5},
+      {대구: 8},
+      {울산: 4},
+      {광주: 7},
+      {강원: 6},
+      {제주: 0.1557},
+    ],
+  },
+  {
+    userId: 'min',
+    username: 'castleMin',
+    percentage: 81.11112,
+    isFriend: false,
+    WanderRate: [
+      {전체: 81.11112},
+      {서울: 12},
+      {경기: 8},
+      {인천: 5},
+      {부산: 15},
+      {대전: 7},
+      {대구: 10},
+      {울산: 6},
+      {광주: 7},
+      {강원: 5},
+      {제주: 6.11112},
+    ],
+  },
+  {
+    userId: 'dodo',
+    username: 'dodohyung',
+    percentage: 78.92152,
+    isFriend: false,
+    WanderRate: [
+      {전체: 78.92152},
+      {서울: 12},
+      {경기: 8},
+      {인천: 5},
+      {부산: 15},
+      {대전: 7},
+      {대구: 10},
+      {울산: 6},
+      {광주: 7},
+      {강원: 5},
+      {제주: 0.92152},
     ],
   },
   {
@@ -256,4 +313,4 @@ const rankData: UserData[] = [
   },
 ];
 
-export default rankData;
+export default wholeData;

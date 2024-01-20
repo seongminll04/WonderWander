@@ -10,8 +10,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
     setNicknameExists : ()=>void;
+    setLogin : () =>void;
 }
-function Naver({setNicknameExists}:Props) {
+function Naver({setNicknameExists,setLogin}:Props) {
     const login = () => {
         NaverLogin.login({appName:Config.APP_NAME!,consumerKey:Config.NAVER_KEY!,consumerSecret:Config.NAVER_SECRET!,serviceUrlScheme:'test'}).then((result) => {
             if (result.isSuccess) {
@@ -34,6 +35,7 @@ function Naver({setNicknameExists}:Props) {
                     AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                     if (res.data["nickname"]) {
                         AsyncStorage.setItem('nickname',res.data["nickname"].toString())
+                        setLogin();
                     } else {
                         setNicknameExists();
                     }
