@@ -13,8 +13,8 @@ function TopBar() {
                 <TouchableOpacity style={{marginRight:15}} onPress={()=>dispatch(setModal('알림'))}>
                     <Icon name="bell" size={24} color='#9D999D'/>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={()=>dispatch(setModal('설정'))}>
-                    <Icon name="gear" size={24} color='#9D999D'/>
+                <TouchableOpacity onPress={()=>dispatch(setModal('검색'))}>
+                    <Icon name="search" size={24} color='#9D999D'/>
                 </TouchableOpacity>
             </View>
         </View>

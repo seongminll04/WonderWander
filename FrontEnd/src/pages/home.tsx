@@ -28,15 +28,9 @@ function Home() {
   const [isLocation , setLocation] = useState("전체")
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={{ flex: 1 ,backgroundColor:'white'}}>
       <TopBar />
       <ScrollView showsVerticalScrollIndicator={false} style={{width:'88%',marginLeft:'6%'}}>
-        <View style={{backgroundColor:'#BCBCBC', width:'100%', flexDirection:'row', alignItems:'center',justifyContent:'center',
-      borderRadius:10, marginBottom:20}}>
-          <Image source={require('@assets/search.png')} style={{width:18,height:18, marginRight:10}} />
-          <TextInput style={{width:'85%'}} placeholder="문화재를 검색해보세요" />
-        </View>
-
         <Carousel />
 
         <PopularCulturalAssets />

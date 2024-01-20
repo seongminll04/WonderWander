@@ -10,9 +10,10 @@ import Config from "react-native-config";
 
 interface Props {
     setNicknameExists : ()=>void;
+    setLogin : () =>void;
 }
 
-function Kakao({setNicknameExists}:Props) {
+function Kakao({setNicknameExists,setLogin}:Props) {
     const login = () => {
         KakaoLogin.login().then((result) => {
             const accesstoken =result.accessToken;
@@ -34,6 +35,7 @@ function Kakao({setNicknameExists}:Props) {
                 AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                 if (res.data["nickname"]) {
                     AsyncStorage.setItem('nickname',res.data["nickname"].toString())
+                    setLogin();
                 } else {
                     setNicknameExists();
                 }

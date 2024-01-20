@@ -64,7 +64,7 @@ function Login({setLogin}: Props) {
             backgroundColor: 'white',
           }}>
           <Text>로그인</Text>
-          <Kakao setNicknameExists={() => setNicknameExists(false)} />
+          <Kakao setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
           <Google setNicknameExists={() => setNicknameExists(false)} />
           <Naver setNicknameExists={() => setNicknameExists(false)} />
         </View>

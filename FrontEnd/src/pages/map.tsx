@@ -10,7 +10,7 @@ import NaverMap from "@/components/navermap";
   
 function Map() {
     return (
-      <SafeAreaView style={{ flex: 1 }}>
+      <SafeAreaView style={{ flex: 1 ,backgroundColor:'white' }}>
         <NaverMap />
       </SafeAreaView>
     );
