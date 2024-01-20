@@ -7,14 +7,16 @@ import Config from "react-native-config";
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setLogin } from "@/store/actions";
 
 
 interface Props {
-    setNicknameExists : ()=>void;
-    setLogin : () =>void;
+    nicknameRegist : ()=>void;
 }
 
-function Google({setNicknameExists,setLogin}:Props) {
+function Google({nicknameRegist}:Props) {
+    const dispatch = useDispatch();
     useEffect(() => {
         GoogleSignin.configure({
           webClientId: Config.GOOGLE_KEY,
@@ -44,9 +46,9 @@ function Google({setNicknameExists,setLogin}:Props) {
                 AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                 if (res.data["nickname"]) {
                     AsyncStorage.setItem('nickname',res.data["nickname"].toString())
-                    setLogin();
+                    dispatch(setLogin(true))
                 } else {
-                    setNicknameExists();
+                    nicknameRegist();
                 }
             }).catch(err => {
                 console.log(err)
@@ -60,12 +62,10 @@ function Google({setNicknameExists,setLogin}:Props) {
         });
     };
     return (
-      <View style={{ flex: 1, justifyContent:'center',alignItems:'center' }}>
         <TouchableOpacity style={styles.login_btn} onPress={()=>{login()}}>
             <Image source={require("@assets/sociallogo/google.png")} style={styles.login_logo} />
             <Text style={styles.login_text}>구글로 로그인하기</Text>
         </TouchableOpacity>
-      </View>
     );
 }
 
@@ -74,21 +74,23 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width:250,
-        height:50,
-        backgroundColor:'#FFFFFF',
-
-        borderRadius:10,
-        borderColor:'#B9BCBE',
-        borderWidth: 1,
+    
+        height:56,
+        backgroundColor:'#F2F2F2',
+        borderRadius:18,
+        // borderColor:'#B9BCBE',
+        // borderWidth: 1,
     },
     login_logo:{
-        width:25,
-        height:25,
+        width:24,
+        height:24,
         marginRight:20
     },
     login_text:{
-        color:'#3B3B3B'
+        color:'#3B3B3B',
+        fontSize:16,
+        marginRight:16
+    
     }
 });
 export default Google;

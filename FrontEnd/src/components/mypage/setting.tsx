@@ -1,15 +1,20 @@
-import { StyleSheet, Modal, Text, View, ScrollView, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, ScrollView, TouchableOpacity } from "react-native";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { setModal } from "@store/actions";
-import { AppState } from "@store/state";
+import { useDispatch } from "react-redux";
+import { setLogin } from "@store/actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 function Setting() {
+    const dispatch = useDispatch();
+    const logout = () =>{
+        AsyncStorage.clear();
+        AsyncStorage.setItem('FirstLogin','ok');
+        dispatch(setLogin(false));
+    }
     return (
         <ScrollView>
             <Text>세팅</Text>
-            <TouchableOpacity onPress={()=>AsyncStorage.clear()}>
+            <TouchableOpacity onPress={()=>logout()}>
                 <Text>로그아웃</Text>
             </TouchableOpacity>
         </ScrollView>

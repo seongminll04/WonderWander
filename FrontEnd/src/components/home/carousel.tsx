@@ -24,20 +24,18 @@ function useInterval(callback: Callback, delay: number | null) {
 }
   
 
-const sss = Dimensions.get("window").width * 0.88
+const sss = Dimensions.get("window").width
+const xxx = Dimensions.get("window").width * 0.06
 
 function Carousel() {
     const dispatch = useDispatch();
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const flatListRef = useRef<FlatList>(null);
-    const data = useMemo(
-        () => [
-            "1","2","3","4"
-        ],
-        [],
-      );
-    const snapToOffsets = useMemo(() => Array.from(Array(data.length)).map((_, index) => index * (sss-36)),[data],);
+
+    const [data, setdata] = useState(["1", "2", "3", "4"]);
+
+    const snapToOffsets = useMemo(() => Array.from(Array(data.length)).map((_, index) => index * (sss-xxx)),[data],);
 
     useEffect(() => {
         if (currentIndex !== snapToOffsets.length) {
@@ -58,12 +56,12 @@ function Carousel() {
             data={data}
             horizontal
             showsHorizontalScrollIndicator={false}
-            contentContainerStyle={{paddingHorizontal:24}}
+            contentContainerStyle={{paddingHorizontal:xxx}}
             snapToOffsets={snapToOffsets}
             ref={flatListRef}
-            renderItem={({item})=>(
-                <View style={{marginRight:12}}>
-                    <Text style={{backgroundColor:'gray', width:sss-48, height:280, borderRadius:40}}>
+            renderItem={({item,index})=>(
+                <View style={{marginRight:xxx}} key={index}>
+                    <Text style={{backgroundColor:'gray', width:sss-2*xxx, height:280, borderRadius:40}}>
                         {item}
                     </Text>
                 </View>

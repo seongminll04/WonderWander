@@ -1,10 +1,6 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { setModal } from "@store/actions";
-import axiosInstance from "@/axiosinstance";
-import Icon from "react-native-vector-icons/SimpleLineIcons";
-import Config from "react-native-config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import ProfileEdit from "./profileedit";
 

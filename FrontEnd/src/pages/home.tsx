@@ -30,7 +30,7 @@ function Home() {
   return (
     <SafeAreaView style={{ flex: 1 ,backgroundColor:'white'}}>
       <TopBar />
-      <ScrollView showsVerticalScrollIndicator={false} style={{width:'88%',marginLeft:'6%'}}>
+      <ScrollView showsVerticalScrollIndicator={false} style={{width:'100%'}}>
         <Carousel />
 
         <PopularCulturalAssets />

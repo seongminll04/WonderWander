@@ -37,7 +37,7 @@ function PopularCulturalAssets() {
   const [isLocation, setLocation] = useState('전체');
   return (
     <View style={{marginTop: 20}}>
-      <Text style={{fontSize: 24, fontWeight: '900', color: 'black'}}>
+      <Text style={{fontSize: 24, fontWeight: '900', color: 'black',marginHorizontal:'6%'}}>
         지역별 인기 문화재
       </Text>
       {/* 지역별 인기 문화재 지역선택 버튼들 */}
@@ -45,7 +45,7 @@ function PopularCulturalAssets() {
         horizontal
         showsHorizontalScrollIndicator={false}
         data={location}
-        contentContainerStyle={{paddingHorizontal: 0, marginTop: 10}}
+        contentContainerStyle={{paddingHorizontal: '6%', marginTop: 10}}
         renderItem={({item}) => (
           <TouchableOpacity
             onPress={() => {
@@ -67,7 +67,7 @@ function PopularCulturalAssets() {
         )}
       />
 
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View style={{justifyContent: 'center', alignItems: 'center',marginHorizontal:'6%'}}>
         <View
           style={{
             flexDirection: 'row',
