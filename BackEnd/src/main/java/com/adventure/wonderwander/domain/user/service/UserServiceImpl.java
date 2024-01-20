@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
      */
     @Override
     @Transactional
-    public Long login(String id, String ImgUrl) throws Exception {
+    public void login(String id, String ImgUrl) throws Exception {
 
         User user = User.builder()
                 .userid(id)
@@ -53,10 +53,25 @@ public class UserServiceImpl implements UserService {
                 .build();
 
         user.passwordEncode(passwordEncoder);
-        User saveUser = userRepository.save(user);
+        userRepository.save(user);
+    }
 
-        // 생성한 계정의 Idx 번호 리턴
-        return saveUser.getId();
+    /**
+     * 닉네임 중복체크
+     */
+    @Transactional
+    @Override
+    public String nicknameUsefulCheck(String nickname) throws Exception {
+        // 닉네임 유효성 검사  (영문,숫자 3자 ~ 10자 이내)
+        if (!Pattern.matches("^[a-zA-Z0-9_가-힣\\s]{3,10}$", nickname)) {
+            return "error_1";
+        }
+        // 닉네임 중복 체크
+        else if(userRepository.findByNickname(nickname).isPresent())
+            return "error_2";
+
+        else
+            return "clear";
     }
 
     /**
@@ -64,24 +79,23 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     @Override
-    public String registerNickname(String nickname, UserDetails userDetails) throws Exception {
+    public void registerNickname(String nickname, UserDetails userDetails) throws Exception {
         // 내 계정정보 불러오기
         User user = userRepository.findByUserid(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
-        // 닉네임 유효성 검사  (영문,숫자 2자 ~ 8자 이내)
-        if (!Pattern.matches("^[a-zA-Z0-9_가-힣\\s]{2,8}$", nickname)) {
-            return "error_1";
+        // 닉네임 유효성 검사  (영문,숫자 3자 ~ 10자 이내)
+        if (!Pattern.matches("^[a-zA-Z0-9_가-힣\\s]{3,10}$", nickname)) {
+            throw new Exception();
         }
         // 닉네임 중복 체크
         else if(userRepository.findByNickname(nickname).isPresent())
-            return "error_2";
+            throw new Exception();
         else {
             // 닉네임 등록
             user.updateNickname(nickname);
             // 그리고 저장
             userRepository.save(user);
-            return "닉네임 등록 완료";
         }
     }
     /**

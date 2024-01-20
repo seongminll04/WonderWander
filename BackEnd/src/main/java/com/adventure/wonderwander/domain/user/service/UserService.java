@@ -6,8 +6,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
-    Long login(String id, String ImgUrl) throws Exception;
-    String registerNickname(String nickname, UserDetails userDetails) throws Exception;
+    void login(String id, String ImgUrl) throws Exception;
+
+    String nicknameUsefulCheck(String nickname) throws Exception;
+
+    void registerNickname(String nickname, UserDetails userDetails) throws Exception;
 
     GetUserProfileResponseDto getProfile(Long userIdx, UserDetails userDetails) throws Exception;
     String changeProfile(MultipartFile image, String intro, UserDetails userDetails) throws Exception;

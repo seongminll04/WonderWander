@@ -22,20 +22,26 @@ public class UserController {
 
     private final JwtService jwtService;
 
+    @ApiOperation(value = "닉네임 중복확인")
+    @GetMapping("/nickname/{nickname}")
+    public ResponseEntity<?> NicknameUsefulCheck(@PathVariable("nickname") String nickname) throws Exception {
+
+        String result = userService.nicknameUsefulCheck(nickname);
+
+        if (result.equals("error_1"))
+            return ResponseEntity.badRequest().body("유효하지 않은 닉네임입니다");
+        else if (result.equals("error_2")) {
+            return ResponseEntity.badRequest().body("이미 존재하는 닉네임입니다");
+        } else
+            return ResponseEntity.ok().body(result);
+    }
     @ApiOperation(value = "닉네임 등록(첫 로그인)")
     @PostMapping("/nickname")
     public ResponseEntity<?> registerNickname(@RequestBody RegisterNicknameRequestDto registerNicknameRequestDto,
                                           @AuthenticationPrincipal UserDetails userDetails) throws Exception {
+        userService.registerNickname(registerNicknameRequestDto.getNickname(), userDetails);
 
-
-        String result = userService.registerNickname(registerNicknameRequestDto.getNickname(), userDetails);
-
-        if (result.equals("error_1"))
-            return ResponseEntity.badRequest().body("유효하지 않은 닉네임입니다. 다시 시도해주세요.");
-        else if (result.equals("error_2")) {
-            return ResponseEntity.badRequest().body("이미 존재하는 닉네임입니다. 다시 시도해주세요.");
-        } else
-            return ResponseEntity.ok().body(result);
+        return ResponseEntity.ok().body("");
     }
 
     @ApiOperation(value = "사용자 정보 불러오기")
