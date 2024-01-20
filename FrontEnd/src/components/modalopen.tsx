@@ -4,10 +4,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import {setModal} from '@store/actions';
 import {AppState} from '@store/state';
 import Alarm from './alarm';
-import Setting from './setting';
 import Intro from './Intro';
-import ProfileEdit from './mypage/profileedit';
 import UserDetail from './ranking/userDetail';
+import Search from './home/search';
 import FrinedSearch from './ranking/friendSearch';
 
 function ModalOpen() {
@@ -26,10 +25,8 @@ function ModalOpen() {
         <Alarm />
       ) : isModalOpen == '소개' ? (
         <Intro />
-      ) : isModalOpen == '내 정보수정' ? (
-        <ProfileEdit />
-      ) : isModalOpen == '설정' ? (
-        <Setting />
+      ) : isModalOpen == '검색' ? (
+        <Search />
       ) : isModalOpen == '사용자 상세정보' ? (
         <UserDetail />
       ) : isModalOpen == '친구 검색' ? (

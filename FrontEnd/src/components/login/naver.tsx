@@ -10,15 +10,16 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
     setNicknameExists : ()=>void;
+    setLogin : () =>void;
 }
-function Naver({setNicknameExists}:Props) {
+function Naver({setNicknameExists,setLogin}:Props) {
     const login = () => {
         NaverLogin.login({appName:Config.APP_NAME!,consumerKey:Config.NAVER_KEY!,consumerSecret:Config.NAVER_SECRET!,serviceUrlScheme:'test'}).then((result) => {
             if (result.isSuccess) {
                 const accesstoken =result.successResponse?.accessToken;
                 axios({
                     method:'post',
-                    url: Config.API_APP_KEY+'/login',
+                    url: Config.API_APP_KEY+'/v1/login',
                     data:{
                         social : 'naver',
                         token : accesstoken
@@ -26,10 +27,15 @@ function Naver({setNicknameExists}:Props) {
                 }).then(res=>{
                     AsyncStorage.setItem('AccessToken',res.headers["authorization"].toString())
                     AsyncStorage.setItem('RefreshToken',res.headers["authorization-refresh"].toString())
-                    AsyncStorage.setItem('userAlarm',res.data["userAlarm"].toString())
-                    AsyncStorage.setItem('userImage',res.data["userImage"].toString())
-                    if (res.data["userNickname"]) {
-                        AsyncStorage.setItem('userNickname',res.data["userNickname"].toString())
+                    AsyncStorage.setItem('alarm',res.data["alarm"].toString())
+                    AsyncStorage.setItem('image',res.data["image"].toString())
+                    AsyncStorage.setItem('follower',res.data["follower"].toString())
+                    AsyncStorage.setItem('following',res.data["following"].toString())
+                    AsyncStorage.setItem('intro',res.data["intro"].toString())
+                    AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
+                    if (res.data["nickname"]) {
+                        AsyncStorage.setItem('nickname',res.data["nickname"].toString())
+                        setLogin();
                     } else {
                         setNicknameExists();
                     }

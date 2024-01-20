@@ -22,6 +22,7 @@ interface Props {
 function Login({setLogin}: Props) {
   const [nicknameExists, setNicknameExists] = useState(true);
   const dispatch = useDispatch();
+
   useEffect(() => {
     const checkFirstLogin = async () => {
       // AsyncStorage.removeItem('FirstLogin');
@@ -35,8 +36,8 @@ function Login({setLogin}: Props) {
     const checkLogin = async () => {
       const accessToken = "await AsyncStorage.getItem('AccessToken')";
       if (accessToken) {
-        const username = "await AsyncStorage.getItem('userNickname')";
-        if (username) {
+        const nickname = await AsyncStorage.getItem('nickname');
+        if (nickname) {
           setLogin();
         } else {
           setNicknameExists(false);
@@ -63,9 +64,9 @@ function Login({setLogin}: Props) {
             backgroundColor: 'white',
           }}>
           <Text>로그인</Text>
-          <Kakao setNicknameExists={() => setNicknameExists(false)} />
-          <Google setNicknameExists={() => setNicknameExists(false)} />
-          <Naver setNicknameExists={() => setNicknameExists(false)} />
+          <Kakao setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
+          <Google setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
+          <Naver setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
         </View>
       ) : (
         <View

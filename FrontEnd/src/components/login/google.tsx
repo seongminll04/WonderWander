@@ -11,9 +11,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 interface Props {
     setNicknameExists : ()=>void;
+    setLogin : () =>void;
 }
 
-function Google({setNicknameExists}:Props) {
+function Google({setNicknameExists,setLogin}:Props) {
     useEffect(() => {
         GoogleSignin.configure({
           webClientId: Config.GOOGLE_KEY,
@@ -27,7 +28,7 @@ function Google({setNicknameExists}:Props) {
             console.log(accesstoken)
             axios({
                 method:'post',
-                url: Config.API_APP_KEY + '/login',
+                url: Config.API_APP_KEY + '/v1/login',
                 data:{
                     'social' : 'google',
                     'token' : accesstoken
@@ -35,11 +36,15 @@ function Google({setNicknameExists}:Props) {
             }).then(res=>{
                 AsyncStorage.setItem('AccessToken',res.headers["authorization"].toString())
                 AsyncStorage.setItem('RefreshToken',res.headers["authorization-refresh"].toString())
-                AsyncStorage.setItem('userAlarm',res.data["userAlarm"].toString())
-                AsyncStorage.setItem('userImage',res.data["userImage"].toString())
-
-                if (res.data["userNickname"]) {
-                    AsyncStorage.setItem('userNickname',res.data["userNickname"].toString())
+                AsyncStorage.setItem('alarm',res.data["alarm"].toString())
+                AsyncStorage.setItem('image',res.data["image"].toString())
+                AsyncStorage.setItem('follower',res.data["follower"].toString())
+                AsyncStorage.setItem('following',res.data["following"].toString())
+                AsyncStorage.setItem('intro',res.data["intro"].toString())
+                AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
+                if (res.data["nickname"]) {
+                    AsyncStorage.setItem('nickname',res.data["nickname"].toString())
+                    setLogin();
                 } else {
                     setNicknameExists();
                 }
