@@ -66,6 +66,9 @@ public class SecurityConfig {
             /* 앱 회원가입 & 로그인 */
             "/api/v1/login",
 
+            /* 닉네임 중복검사 */
+            "/api/v1/user/nickname/**",
+
             "/api/batch/**"
 
 
