@@ -12,7 +12,7 @@ export const setLogin = (value: {
 });
 
 export const setModal = (value: string | null) => ({
-  type: "SET_MODAL",
+  type: 'SET_MODAL',
   payload: value,
 });
 
@@ -22,3 +22,7 @@ export const updateNickname = (value: string ) => ({
 });
 
 
+export const setUserDetail = (isUserDetail: string | null) => ({
+  type: 'SET_USER',
+  payload: isUserDetail,
+});

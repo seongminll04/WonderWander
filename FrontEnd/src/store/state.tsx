@@ -10,7 +10,7 @@ export interface AppState {
     Intro:string;
   }|null;
   // 모달 오픈 (로그인 , 마이페이지, 음악 상세정보)
-  isModalOpen:string|null;
-
+  isModalOpen: string | null;
+  // 상세 정보
+  isUserDetail: string | null;
 }
-  
