@@ -7,13 +7,15 @@ import * as KakaoLogin from '@react-native-seoul/kakao-login';
 import axios from "axios";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Config from "react-native-config";
+import { useDispatch } from "react-redux";
+import { setLogin } from "@/store/actions";
 
 interface Props {
-    setNicknameExists : ()=>void;
-    setLogin : () =>void;
+    nicknameRegist : ()=>void;
 }
 
-function Kakao({setNicknameExists,setLogin}:Props) {
+function Kakao({nicknameRegist}:Props) {
+    const dispatch = useDispatch();
     const login = () => {
         KakaoLogin.login().then((result) => {
             const accesstoken =result.accessToken;
@@ -35,9 +37,9 @@ function Kakao({setNicknameExists,setLogin}:Props) {
                 AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                 if (res.data["nickname"]) {
                     AsyncStorage.setItem('nickname',res.data["nickname"].toString())
-                    setLogin();
+                    dispatch(setLogin(true))
                 } else {
-                    setNicknameExists();
+                    nicknameRegist();
                 }
             }).catch(err => {
                 console.log(err)
@@ -52,12 +54,10 @@ function Kakao({setNicknameExists,setLogin}:Props) {
     };
 
     return (
-      <View style={{ flex: 1, justifyContent:'center',alignItems:'center' }}>
         <TouchableOpacity style={styles.login_btn} onPress={()=>login()}>
             <Image source={require("@assets/sociallogo/kakao.png")} style={styles.login_logo} />
             <Text style={styles.login_text}>카카오로 로그인하기</Text>
         </TouchableOpacity>
-      </View>
     );
 }
  
@@ -66,21 +66,21 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width:250,
-        height:50,
+        height:56,
         backgroundColor:'#F9E000',
 
-        borderRadius:10,
-        borderColor:'#B9BCBE',
-        borderWidth: 1,
+        borderRadius:18,
+        // borderColor:'#B9BCBE',
+        // borderWidth: 1,
     },
     login_logo:{
-        width:25,
-        height:25,
+        width:24,
+        height:24,
         marginRight:20
     },
     login_text:{
-        color:'#3B3B3B'
+        color:'#3B3B3B',
+        fontSize:16
     }
 });
 export default Kakao;

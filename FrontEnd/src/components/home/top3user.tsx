@@ -5,7 +5,7 @@ import LinearGradient from 'react-native-linear-gradient';
 function Top3User() {
     return (
         <View
-        style={{marginTop:20,marginBottom:50}}>
+        style={{marginTop:20,marginBottom:50,marginHorizontal:'6%'}}>
             <Text style={{fontSize:24, fontWeight:'900', color:'black'}}>TOP3 인플루언서</Text>
 
             <View style={{marginTop:20, flexDirection:'row', justifyContent:'space-around'}}>

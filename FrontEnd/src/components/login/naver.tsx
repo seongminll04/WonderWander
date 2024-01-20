@@ -7,12 +7,15 @@ import NaverLogin from '@react-native-seoul/naver-login';
 import axios from "axios";
 import Config from "react-native-config";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useDispatch } from "react-redux";
+import { setLogin } from "@/store/actions";
 
 interface Props {
-    setNicknameExists : ()=>void;
-    setLogin : () =>void;
+    nicknameRegist : ()=>void;
+
 }
-function Naver({setNicknameExists,setLogin}:Props) {
+function Naver({nicknameRegist}:Props) {
+    const dispatch = useDispatch()
     const login = () => {
         NaverLogin.login({appName:Config.APP_NAME!,consumerKey:Config.NAVER_KEY!,consumerSecret:Config.NAVER_SECRET!,serviceUrlScheme:'test'}).then((result) => {
             if (result.isSuccess) {
@@ -35,9 +38,9 @@ function Naver({setNicknameExists,setLogin}:Props) {
                     AsyncStorage.setItem('userIdx',res.data["userIdx"].toString())
                     if (res.data["nickname"]) {
                         AsyncStorage.setItem('nickname',res.data["nickname"].toString())
-                        setLogin();
+                        dispatch(setLogin(true))
                     } else {
-                        setNicknameExists();
+                        nicknameRegist();
                     }
                 }).catch(err => {
                     console.log(err)
@@ -53,35 +56,32 @@ function Naver({setNicknameExists,setLogin}:Props) {
     };
     
     return (
-      <View style={{ flex: 1, justifyContent:'center',alignItems:'center' }}>
         <TouchableOpacity style={styles.login_btn} onPress={()=>login()}>
             <Image source={require("@assets/sociallogo/naver.png")} style={styles.login_logo} />
             <Text style={styles.login_text}>네이버로 로그인하기</Text>
         </TouchableOpacity>
-      </View>
     );
 }
 
 const styles = StyleSheet.create({
+
     login_btn:{
-        flexDirection: 'row',
+        flexDirection:'row',
         justifyContent: 'center',
         alignItems: 'center',
-        width:250,
-        height:50,
-        backgroundColor:'#03C75A',
+        height:56,
+        backgroundColor:'#78D98A',
+        borderRadius:18,
 
-        borderRadius:10,
-        borderColor:'#B9BCBE',
-        borderWidth: 1,
     },
     login_logo:{
-        width:25,
-        height:25,
+        width:24,
+        height:24,
         marginRight:20
     },
     login_text:{
-        color:'white'
+        color:'white',
+        fontSize:16
     }
 });
 export default Naver;

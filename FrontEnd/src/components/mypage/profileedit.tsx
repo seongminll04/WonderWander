@@ -1,7 +1,5 @@
 import { Alert, Image, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setModal } from "@store/actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Icon from "react-native-vector-icons/AntDesign";
 import ImagePicker, { launchImageLibrary, ImagePickerResponse, ImageLibraryOptions } from 'react-native-image-picker';

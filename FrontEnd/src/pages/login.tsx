@@ -13,19 +13,17 @@ import NicknameRegistration from '@components/login/nicknameregistration';
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useDispatch} from 'react-redux';
-import {setModal} from '@/store/actions';
+import {setLogin, setModal} from '@/store/actions';
 
-interface Props {
-  setLogin: () => void;
-}
+import Icon from "react-native-vector-icons/AntDesign";
 
-function Login({setLogin}: Props) {
-  const [nicknameExists, setNicknameExists] = useState(true);
+
+function Login() {
+  // 닉네임 필요 여부
+  const [isNextStep, setNextStep] = useState(false);
   const dispatch = useDispatch();
-
   useEffect(() => {
     const checkFirstLogin = async () => {
-      // AsyncStorage.removeItem('FirstLogin');
       const FirstLogin = await AsyncStorage.getItem('FirstLogin');
       if (!FirstLogin) {
         dispatch(setModal('소개'));
@@ -34,13 +32,13 @@ function Login({setLogin}: Props) {
     checkFirstLogin();
 
     const checkLogin = async () => {
-      const accessToken = "await AsyncStorage.getItem('AccessToken')";
+      const accessToken = await AsyncStorage.getItem('AccessToken');
       if (accessToken) {
         const nickname = await AsyncStorage.getItem('nickname');
         if (nickname) {
-          setLogin();
+          dispatch(setLogin(true))
         } else {
-          setNicknameExists(false);
+          setNextStep(true);
         }
       }
     };
@@ -51,47 +49,24 @@ function Login({setLogin}: Props) {
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'white',
+        marginHorizontal:'6%'
       }}>
-      {nicknameExists ? (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-          }}>
-          <Text>로그인</Text>
-          <Kakao setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
-          <Google setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
-          <Naver setNicknameExists={() => setNicknameExists(false)} setLogin={()=>setLogin()} />
-        </View>
-      ) : (
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: 'white',
-          }}>
-          <Text>닉네임 등록</Text>
-          <TouchableOpacity
-            onPress={() => {
-              setNicknameExists(true);
-              AsyncStorage.clear();
-            }}>
-            <Text>뒤로가기</Text>
-          </TouchableOpacity>
-          <NicknameRegistration
-            setNickname={() => {
-              setNicknameExists(false);
-              setLogin();
-            }}
-          />
-        </View>
-      )}
+      {isNextStep &&
+      <TouchableOpacity style={{position:'absolute',top:30}}
+      onPress={()=>{setNextStep(false); AsyncStorage.clear(); AsyncStorage.setItem('FirstLogin','ok'); }}>
+        <Icon name="arrowleft" size={24} color='#000000'/>
+      </TouchableOpacity>}
+      <View style={{height:'30%', marginTop:'50%', marginBottom:'15%',backgroundColor:'#F2F2F2',width:'100%',
+        justifyContent:'center',alignItems:'center'}}>
+        <Text>로고</Text>
+      </View>
+      {!isNextStep ? 
+      <View style={{height:'24%',width:'100%',justifyContent:'space-between'}}>
+        <Kakao nicknameRegist={() => setNextStep(true)} />
+        <Naver nicknameRegist={() => setNextStep(true)} />
+        <Google nicknameRegist={() => setNextStep(true)} />
+      </View>
+      : <NicknameRegistration />}
     </SafeAreaView>
   );
 }
