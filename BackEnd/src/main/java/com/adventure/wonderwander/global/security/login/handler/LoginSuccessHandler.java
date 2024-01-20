@@ -1,6 +1,7 @@
 package com.adventure.wonderwander.global.security.login.handler;
 
 import com.adventure.wonderwander.domain.user.entity.User;
+import com.adventure.wonderwander.domain.user.repository.FriendshipRepository;
 import com.adventure.wonderwander.domain.user.repository.UserRepository;
 import com.adventure.wonderwander.global.security.jwt.JwtService;
 import com.adventure.wonderwander.global.security.redis.RedisRefreshTokenService;
@@ -28,6 +29,8 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
     private final RedisRefreshTokenService redisRefreshTokenService;
 
+    private final FriendshipRepository friendshipRepository;
+
     @Override
     public void onAuthenticationSuccess(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse,
                                         Authentication authentication) throws IOException {
@@ -48,26 +51,29 @@ public class LoginSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
         User user = userRepository.findByUserid(id)
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
-        if(user != null) {
-            JSONObject jsonObject = new JSONObject();
-            jsonObject.put("userIdx", user.getId());
-            jsonObject.put("userNickname", user.getNickname());
-            jsonObject.put("userImage", user.getImgUrl());
-            jsonObject.put("userAlarm", user.getAlarm());
+        JSONObject jsonObject = new JSONObject();
 
-            // Get the PrintWriter
-            PrintWriter out = httpServletResponse.getWriter();
-            // Write data to the response body
-            out.println(jsonObject);
-            // Close the PrintWriter
-            out.close();
+        jsonObject.put("userIdx", user.getId());
 
-            // Redis에 RefreshToken 저장
-            redisRefreshTokenService.setRedisRefreshToken(refreshToken, id);
+        jsonObject.put("image", user.getImgUrl());
+        jsonObject.put("nickname", user.getNickname());
+        jsonObject.put("intro", user.getIntro());
 
-        }
-        else
-            throw new NullPointerException("해당 유저가 존재하지 않습니다.");
+        jsonObject.put("follower", friendshipRepository.findAllByFriendIdx(user.getId()).size());
+        jsonObject.put("following", friendshipRepository.findAllByUser(user).size());
+        
+        jsonObject.put("alarm", user.getAlarm());
+
+        // Get the PrintWriter
+        PrintWriter out = httpServletResponse.getWriter();
+        // Write data to the response body
+        out.println(jsonObject);
+        // Close the PrintWriter
+        out.close();
+
+        // Redis에 RefreshToken 저장
+        redisRefreshTokenService.setRedisRefreshToken(refreshToken, id);
+
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.adventure.wonderwander.global.config;
 
+import com.adventure.wonderwander.domain.user.repository.FriendshipRepository;
 import com.adventure.wonderwander.domain.user.repository.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -40,6 +41,8 @@ public class SecurityConfig {
 
     private final UserRepository userRepository;
 
+    private final FriendshipRepository friendshipRepository;
+
     private final ObjectMapper objectMapper;
 
     private static final String[] WHITE_LIST = {
@@ -60,11 +63,8 @@ public class SecurityConfig {
             "/favicon.ico",
             "/oauth2/**",
 
-            /* 앱 회원가입, 로그인 */
-            "/api/login",
-
-            /* 앱 닉네임 중복확인 */
-            "/api/nicknameCheck/**",
+            /* 앱 회원가입 & 로그인 */
+            "/api/v1/login",
 
             "/api/batch/**"
 
@@ -128,7 +128,7 @@ public class SecurityConfig {
      * */
     @Bean
     public LoginSuccessHandler loginSuccessHandler() {
-        return new LoginSuccessHandler(jwtService, userRepository, redisRefreshTokenService);
+        return new LoginSuccessHandler(jwtService, userRepository, redisRefreshTokenService,friendshipRepository);
     }
 
     @Bean

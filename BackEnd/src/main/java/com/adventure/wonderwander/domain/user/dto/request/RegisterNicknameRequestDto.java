@@ -7,12 +7,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class ChangeNicknameRequestDto {
+public class RegisterNicknameRequestDto {
     @NotBlank(message = "nickname은 빈값이 올 수 없습니다")
     private String nickname;
 
     @Builder
-    public ChangeNicknameRequestDto(String nickname){
+    public RegisterNicknameRequestDto(String nickname){
         this.nickname = nickname;
     }
 }

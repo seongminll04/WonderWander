@@ -48,17 +48,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain) throws ServletException, IOException {
 
         // token 검증이 필요없는 요청일 때
-        if (httpServletRequest.getRequestURI().equals("/api/login") ||
-                httpServletRequest.getRequestURI().contains("/api/nicknameCheck")) {
+        if (httpServletRequest.getRequestURI().equals("/api/v1/login")) {
             filterChain.doFilter(httpServletRequest, httpServletResponse);
-
             // 더 이상 필터를 진행하지 않고 return!
             return;
         }
 
         // 검증이 필요한 요청은 진행
 
-        if (httpServletRequest.getRequestURI().equals("/api/refresh")) {
+        if (httpServletRequest.getRequestURI().equals("/api/v1/refresh")) {
             // 요청 헤더에서 RefreshToken 추출 - 없거나 유효하지 않으면 null 반환
             String refreshToken = jwtService.extractRefreshToken(httpServletRequest)
                     .filter(jwtService::isTokenValid)
