@@ -1,16 +1,12 @@
 package com.adventure.wonderwander.domain.user.controller;
 
-import com.adventure.wonderwander.domain.user.dto.request.ChangeProfileRequestDto;
 import com.adventure.wonderwander.domain.user.dto.request.RegisterNicknameRequestDto;
 import com.adventure.wonderwander.domain.user.service.UserService;
 import com.adventure.wonderwander.global.security.jwt.JwtService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.ApiOperation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -53,18 +49,9 @@ public class UserController {
     @ApiOperation(value = "내 정보 수정")
     @PatchMapping("/editProfile")
     public ResponseEntity<?> changeProfile(@RequestPart(value = "image", required = false) MultipartFile image,
-                                        @RequestPart("userdata") String userdata,
+                                           @RequestPart(value = "intro", required = false) String intro,
                                         @AuthenticationPrincipal UserDetails userDetails) throws Exception {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            ChangeProfileRequestDto changeProfileRequestDto = objectMapper.readValue(userdata, ChangeProfileRequestDto.class);
-            return ResponseEntity.ok()
-                    .body(userService.changeProfile(changeProfileRequestDto,image, userDetails));
-        } catch (JsonProcessingException e) {
-            // 처리 중에 오류가 발생한 경우 예외 처리
-            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during changeProfile");
-        }
+        return ResponseEntity.ok().body(userService.changeProfile(image, intro, userDetails));
     }
 
     @ApiOperation(value = "앱 로그아웃")

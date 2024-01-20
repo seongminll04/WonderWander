@@ -1,10 +1,7 @@
 package com.adventure.wonderwander.domain.user.service;
 
 
-import com.adventure.wonderwander.domain.user.dto.request.ChangeProfileRequestDto;
-import com.adventure.wonderwander.domain.user.dto.response.GetFriendListResponseDto;
 import com.adventure.wonderwander.domain.user.dto.response.GetUserProfileResponseDto;
-import com.adventure.wonderwander.domain.user.entity.Friendship;
 import com.adventure.wonderwander.domain.user.entity.User;
 import com.adventure.wonderwander.domain.user.repository.FriendshipRepository;
 import com.adventure.wonderwander.domain.user.repository.UserRepository;
@@ -111,25 +108,25 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     @Override
-    public String changeProfile(ChangeProfileRequestDto changeProfileRequestDto,
-                                MultipartFile image, UserDetails userDetails) throws Exception {
+    public String changeProfile(MultipartFile image, String intro,
+                                                  UserDetails userDetails) throws Exception {
         User user = userRepository.findByUserid(userDetails.getUsername())
                 .orElseThrow(() -> new EmptyResultDataAccessException("해당 유저는 존재하지 않습니다.", 1));
 
-        if (!image.isEmpty()) {
+        if (intro != null) {
+            user.updateIntro(intro);
+        }
+
+        if (image != null) {
             String fileName =  s3Service.generateImgFileName(image, user.getUserid());
             byte[] fileBytes = image.getBytes();
             String img = s3Service.uploadToS3(fileName,fileBytes, image.getContentType());
             user.updateProfileImg(img);
+
+            return img;
         }
 
-        if (!changeProfileRequestDto.getNickname().equals(user.getNickname()))
-            user.updateNickname(changeProfileRequestDto.getNickname());
-
-        if (!changeProfileRequestDto.getUserIntro().equals(user.getIntro()))
-            user.updateIntro(changeProfileRequestDto.getUserIntro());
-
-        return "내 정보 수정 완료";
+        return null;
     }
 
     /**
