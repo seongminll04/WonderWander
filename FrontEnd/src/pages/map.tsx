@@ -4,7 +4,7 @@ import {
     Text,
   } from "react-native";
 import React from "react";
-import NaverMap from "@/components/navermap";
+import NaverMap from "@/components/map/navermap";
 
 
   
