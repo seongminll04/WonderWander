@@ -70,7 +70,8 @@ function Carousel() {
             />
             <View style={styles.dotContainer}>
                 {data.map((_, index) => (
-                <TouchableOpacity onPress={()=>{setCurrentIndex(index)}}
+                <TouchableOpacity key={index}
+                onPress={()=>{setCurrentIndex(index)}}
                 style={[styles.dot,{backgroundColor: index === currentIndex ? '#000000' : '#D9D9D9',},]}/>
                 ))}
             </View>

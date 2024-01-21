@@ -6,6 +6,7 @@ import Home from '@/pages/home';
 import Map from '@/pages/map';
 import Ranking from '@/pages/ranking';
 import MyPage from '@/pages/mypage';
+import AR from '@/pages/ar';
 
 const Tab = createBottomTabNavigator();
 
@@ -52,6 +53,21 @@ function BottomTabs() {
         }}
       />
       <Tab.Screen
+        name="AR"
+        component={AR}
+        options={{
+          title: 'AR',
+          tabBarIcon: ({focused}) => {
+            return (
+              <Image
+                source={require('@assets/AR.png')}
+                style={{tintColor: focused ? '#3B3B3B' : '#B9BCBE'}}
+              />
+            );
+          },
+        }}
+      />
+      <Tab.Screen
         name="Ranking"
         component={Ranking}
         options={{
@@ -70,11 +86,11 @@ function BottomTabs() {
         name="MyPage"
         component={MyPage}
         options={{
-          title: '마이페이지',
+          title: '마이룸',
           tabBarIcon: ({focused}) => {
             return (
               <Image
-                source={require('@assets/Setting.png')}
+                source={require('@assets/myroom.png')}
                 style={{tintColor: focused ? '#3B3B3B' : '#B9BCBE'}}
               />
             );
