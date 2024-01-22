@@ -8,6 +8,7 @@ import Intro from './Intro';
 import UserDetail from './ranking/userDetail';
 import Search from './home/search';
 import FrinedSearch from './ranking/friendSearch';
+import AlarmSetting from './mypage/setting/alarmsetting';
 
 function ModalOpen() {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ function ModalOpen() {
       }}>
       {isModalOpen == '알림' ? (
         <Alarm />
+      ) : isModalOpen == '알림설정' ? (
+        <AlarmSetting />
       ) : isModalOpen == '소개' ? (
         <Intro />
       ) : isModalOpen == '검색' ? (
