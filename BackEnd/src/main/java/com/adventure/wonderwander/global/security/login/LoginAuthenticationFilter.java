@@ -82,11 +82,14 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
                     throw new RuntimeException(e);
                 }
             }
-            // 로그인 했으니깐 탈퇴중이라면 탈퇴 취소
-//            if (user.getDeletedAt() != null) {
-//                user.cancelDeletedDate();
-//                userRepository.save(user);
-//            }
+            else {
+                // 로그인 했으니깐 탈퇴중이라면 탈퇴 취소
+                if (user.getDeletedAt() != null) {
+                    user.cancelDeletedDate();
+                    userRepository.save(user);
+                }
+            }
+
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("kakao@"+num, "social");
 
             return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
@@ -113,6 +116,13 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
                     userService.login("google@"+num, thumbnailImageUrl);
                 } catch (Exception e) {
                     throw new RuntimeException(e);
+                }
+            }
+            else {
+                // 로그인 했으니깐 탈퇴중이라면 탈퇴 취소
+                if (user.getDeletedAt() != null) {
+                    user.cancelDeletedDate();
+                    userRepository.save(user);
                 }
             }
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("google@"+num, "social");
@@ -148,6 +158,14 @@ public class LoginAuthenticationFilter extends AbstractAuthenticationProcessingF
                     throw new RuntimeException(e);
                 }
             }
+            else {
+                // 로그인 했으니깐 탈퇴중이라면 탈퇴 취소
+                if (user.getDeletedAt() != null) {
+                    user.cancelDeletedDate();
+                    userRepository.save(user);
+                }
+            }
+
             UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken("naver@"+num, "social");
 
             return this.getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
