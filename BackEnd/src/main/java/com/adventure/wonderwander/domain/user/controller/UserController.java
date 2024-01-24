@@ -72,7 +72,7 @@ public class UserController {
     }
     @ApiOperation(value = "회원 탈퇴")
     @DeleteMapping("/withdraw")
-    public ResponseEntity<?> quit(HttpServletRequest httpServletRequest,
+    public ResponseEntity<?> withdraw(HttpServletRequest httpServletRequest,
                                   @AuthenticationPrincipal UserDetails userDetails) {
 
         Long result = userService.withdraw(jwtService.extractAccessToken(httpServletRequest)
