@@ -4,9 +4,13 @@ import { useDispatch } from "react-redux";
 import { setLogin, setModal } from "@store/actions";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import SwitchToggle from "react-native-switch-toggle";
+import Withdraw from "./setting/withdraw";
+import axiosInstance from "@/axiosinstance";
+import Config from "react-native-config";
 
 function Setting() {
     const dispatch = useDispatch();
+    const [isWithdraw, setWithdraw] = useState(false);
     const [isVisitedToggle, setVisitedToggle] = useState(false);
     const [isPercentToggle, setPercentToggle] = useState(false);
 
@@ -14,12 +18,25 @@ function Setting() {
     const visitedToggleSwitch = () => setVisitedToggle(previousState => !previousState);
 
     const logout = () =>{
-        AsyncStorage.clear();
-        AsyncStorage.setItem('FirstLogin','ok');
-        dispatch(setLogin(false));
+        axiosInstance({
+            method:'get',
+            url: Config.API_APP_KEY + '/v1/user/logout',
+        }).then(() => {
+            AsyncStorage.clear();
+            AsyncStorage.setItem('FirstLogin','ok');
+            dispatch(setLogin(false));
+        }).catch(err => {
+            console.log(err)
+        })
+        // AsyncStorage.clear();
+        // AsyncStorage.setItem('FirstLogin','ok');
+        // dispatch(setLogin(false));
     }
     return (
         <ScrollView style={{marginHorizontal:'6%'}}>
+            
+            {isWithdraw && <Withdraw closeModal={()=>setWithdraw(false)}/> }
+
             <View style={{marginVertical:8}}>
                 <Text style={{fontSize:12,marginBottom:8}}>알림 설정</Text>
                 <TouchableOpacity onPress={()=>{dispatch(setModal("알림설정"))}}
@@ -86,7 +103,8 @@ function Setting() {
                 <TouchableOpacity onPress={()=>logout()} style={{flexDirection:'row',justifyContent:'space-between',paddingVertical:15, borderBottomColor:'#F2F2F2',borderBottomWidth:1}}>
                     <Text style={{fontSize:14,color:'black'}}>로그아웃</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={{flexDirection:'row',justifyContent:'space-between',paddingVertical:15, borderBottomColor:'#F2F2F2',borderBottomWidth:1}}>
+                <TouchableOpacity onPress={()=>{setWithdraw(true)}}
+                 style={{flexDirection:'row',justifyContent:'space-between',paddingVertical:15, borderBottomColor:'#F2F2F2',borderBottomWidth:1}}>
                     <Text style={{fontSize:14,color:'black'}}>회원탈퇴</Text>
                 </TouchableOpacity>
             </View>
