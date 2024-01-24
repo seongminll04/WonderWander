@@ -8,7 +8,7 @@ interface Props {
 
 function FunctionBar({isPage,setPage}:Props) {
     return (
-        <View style={{flexDirection:'row', justifyContent:'space-around', height:50, marginBottom:20}}>
+        <View style={{flexDirection:'row', justifyContent:'space-around', height:50, marginBottom:10}}>
           <TouchableOpacity onPress={()=>{setPage("홈")}}
           style={[styles.pagelist, isPage==='홈' && styles.select_page ]}>
             <Text style={[isPage==='홈' && {color:'#000000'}]}>홈</Text>

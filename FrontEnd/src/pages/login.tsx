@@ -4,6 +4,7 @@ import {
   SafeAreaView,
   View,
   TouchableOpacity,
+  ToastAndroid,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
 import Kakao from '@components/login/kakao';
@@ -36,7 +37,8 @@ function Login() {
       if (accessToken) {
         const nickname = await AsyncStorage.getItem('nickname');
         if (nickname) {
-          dispatch(setLogin(true))
+          dispatch(setLogin(true));
+          ToastAndroid.show("자동 로그인되었습니다.", ToastAndroid.SHORT);
         } else {
           setNextStep(true);
         }
